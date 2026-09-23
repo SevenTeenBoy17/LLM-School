@@ -1,0 +1,27 @@
+{
+  "mode": "production",
+  "ok": true,
+  "cases": [
+    {
+      "role": "admin",
+      "login": 200,
+      "route": "/admin/permissions",
+      "status": 200
+    }
+  ],
+  "pageErrors": [],
+  "assets": [
+    {
+      "path": "/art/manor-v7/decorations.webp",
+      "status": 200
+    },
+    {
+      "path": "/3d/globe.glb",
+      "status": 200
+    },
+    {
+      "path": "/login-bg.mp4",
+      "status": 200
+    }
+  ]
+}

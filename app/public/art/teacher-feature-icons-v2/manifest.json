@@ -1,0 +1,757 @@
+{
+  "schemaVersion": 1,
+  "collection": "teacher-feature-icons-v2",
+  "version": "2.0.0",
+  "generatedAt": "2026-08-31T18:19:29.946Z",
+  "origin": "OpenAI built-in image generation, original prompts derived from user-supplied style references",
+  "extraction": "4x4 equal-cell crop, edge-connected chroma-key alpha removal, optical normalization to 320x320 lossless PNG",
+  "runtimeUse": "Static project assets only; no model call occurs in the student or teacher application",
+  "sources": [
+    {
+      "id": "atlas-a",
+      "file": ".agent-supervisor/assets/teacher-feature-icons-v2/atlas-a-green.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "8bd16a5dc2088a51b350bd0e3c6dcb916b2cc86fb5b182dadf3f82e5e7a581cb",
+      "promptSummary": "Core teacher workspace, agent, model recommendation, dashboard metric, knowledge, and source icons."
+    },
+    {
+      "id": "atlas-b",
+      "file": ".agent-supervisor/assets/teacher-feature-icons-v2/atlas-b-green.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "5ccef6bc2b6892ad5cc63316c147dcde29922cb3d80ad052f4d0d008d2dcac3b",
+      "promptSummary": "Teaching design, courseware, assessment, tutoring, and academic prompt workflow icons."
+    },
+    {
+      "id": "atlas-c",
+      "file": ".agent-supervisor/assets/teacher-feature-icons-v2/atlas-c-green.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "ad4d2bd98f4d3ca70899a59f9f0f009cf156594e0568db4bc5941ccaf2e6349b",
+      "promptSummary": "Research, reflection, family communication, prompt library, model marketplace, and category icons."
+    }
+  ],
+  "assets": [
+    {
+      "id": "agent-workspace",
+      "file": "agent-workspace.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 0,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 49883,
+      "chromaLeakPixels": 0,
+      "sha256": "27631c65dcb5a8727698931fc1a97e25d8559ffd817111dd11202f61dd4832e8"
+    },
+    {
+      "id": "conversations",
+      "file": "conversations.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 0,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 45124,
+      "chromaLeakPixels": 0,
+      "sha256": "0788d77ae892661c98660d5819a0d3c81f5994affa378bad34f8ab7684ff55a6"
+    },
+    {
+      "id": "verified-quality",
+      "file": "verified-quality.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 0,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 53021,
+      "chromaLeakPixels": 0,
+      "sha256": "533d4764f4efac2e2128f9602382be48fc4a7e61cc1d63c59f989fb9c168da45"
+    },
+    {
+      "id": "published-toolbox",
+      "file": "published-toolbox.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 0,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 64761,
+      "chromaLeakPixels": 0,
+      "sha256": "e78f9d005c5731bbb4e43b6e6c4b80d3016d877e7c7b9844e390fd0ec2a7d17c"
+    },
+    {
+      "id": "research-review",
+      "file": "research-review.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 1,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 38413,
+      "chromaLeakPixels": 0,
+      "sha256": "3481484f8bb92cad312e96e47bbba08e6edbe7b55a8380b0f476b2767e5ada01"
+    },
+    {
+      "id": "lesson-plan",
+      "file": "lesson-plan.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 1,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 58216,
+      "chromaLeakPixels": 0,
+      "sha256": "e50d1d1996c889112ef6b5b1d7c80c6b8c96fba380e2a6e7854ec70567a34345"
+    },
+    {
+      "id": "document-edit",
+      "file": "document-edit.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 1,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 58462,
+      "chromaLeakPixels": 0,
+      "sha256": "644cf2a20a115964fb3dd3778cc51bdc4b12cc24140dcd8b69625b2fca051147"
+    },
+    {
+      "id": "courseware-board",
+      "file": "courseware-board.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 1,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 54635,
+      "chromaLeakPixels": 0,
+      "sha256": "29d6a98bc64dda7f33fb93d51b0e79fc766b7fd0f91ab601e1d0ea8a6678dadc"
+    },
+    {
+      "id": "lesson-test",
+      "file": "lesson-test.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 2,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 60873,
+      "chromaLeakPixels": 0,
+      "sha256": "6c7c5cb2d431c54fd80b16116f272244301038eb4b518008901ecb5faa7c19c0"
+    },
+    {
+      "id": "paper-polish",
+      "file": "paper-polish.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 2,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 36694,
+      "chromaLeakPixels": 0,
+      "sha256": "6aedc22d442d1767b8e7f923fca74b9f02568afbb501dd80076f50318f123c9f"
+    },
+    {
+      "id": "courseware-art",
+      "file": "courseware-art.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 2,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 68642,
+      "chromaLeakPixels": 0,
+      "sha256": "b563ef213a129f2ed5dc25f5e05afcca35c72ba5022ad50863c5320b84d63b56"
+    },
+    {
+      "id": "source-database",
+      "file": "source-database.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 2,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 62101,
+      "chromaLeakPixels": 0,
+      "sha256": "6837d48785d8ad628fce273cb2c3777662bcad5decd82e60370a089ddbb8a03d"
+    },
+    {
+      "id": "class-mastery",
+      "file": "class-mastery.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 3,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 52227,
+      "chromaLeakPixels": 0,
+      "sha256": "af950a337d5c0a1d2b1d4895a6989195d48c756661b0ebc1bc3047c24136c0e6"
+    },
+    {
+      "id": "pending-review",
+      "file": "pending-review.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 3,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 60856,
+      "chromaLeakPixels": 0,
+      "sha256": "779112ac59e74cc1e48804363f7d5efeaaeb5b8ae8199a85ab47e7e07419c334"
+    },
+    {
+      "id": "knowledge-book",
+      "file": "knowledge-book.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 3,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 64047,
+      "chromaLeakPixels": 0,
+      "sha256": "98cf5fad6f4e5b151bd4263e71190afe2d61fd954a5152532fe511235e106ead"
+    },
+    {
+      "id": "fair-use",
+      "file": "fair-use.png",
+      "atlas": "atlas-a",
+      "cell": {
+        "row": 3,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 60833,
+      "chromaLeakPixels": 0,
+      "sha256": "ccc766dcb40c8176411b4458aac6e0b8c1c848b17ccbc882de798d58cef96c32"
+    },
+    {
+      "id": "prompt-lesson-plan",
+      "file": "prompt-lesson-plan.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 0,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 58270,
+      "chromaLeakPixels": 0,
+      "sha256": "6fc6fc9bdb486913fac530f1f38af4601a4a9a9e6ebab90a1218c809e515ef53"
+    },
+    {
+      "id": "prompt-lesson-hook",
+      "file": "prompt-lesson-hook.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 0,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 68805,
+      "chromaLeakPixels": 0,
+      "sha256": "37a07f89088900537b4bc66cba6c5ef0ae44a561123b72167eaf28c4a8bb6437"
+    },
+    {
+      "id": "prompt-unit-design",
+      "file": "prompt-unit-design.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 0,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 35050,
+      "chromaLeakPixels": 0,
+      "sha256": "5ffca48cf2e43b69c66720f2843205be2603f33958f7e56ba31a953ef4afca77"
+    },
+    {
+      "id": "prompt-pbl",
+      "file": "prompt-pbl.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 0,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 35206,
+      "chromaLeakPixels": 0,
+      "sha256": "b3ad5296fdab535501267182be9e542987a7adb12dcaefad48f139c054e04e6a"
+    },
+    {
+      "id": "prompt-reading-levels",
+      "file": "prompt-reading-levels.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 1,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 47371,
+      "chromaLeakPixels": 0,
+      "sha256": "29f774185c659877024a40944068545ee970c80160b172b7db98f7194a2195bb"
+    },
+    {
+      "id": "prompt-slide-outline",
+      "file": "prompt-slide-outline.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 1,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 52103,
+      "chromaLeakPixels": 0,
+      "sha256": "54dd22f774a5e3db4c55c90e623bc6bc633d2ab58b34a69365650de2f6bb01b7"
+    },
+    {
+      "id": "prompt-study-sheet",
+      "file": "prompt-study-sheet.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 1,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 58379,
+      "chromaLeakPixels": 0,
+      "sha256": "1d9590202261d86257cd6b013c916415d68feadde0d1cb15ac8b244e1365318f"
+    },
+    {
+      "id": "prompt-lecture-script",
+      "file": "prompt-lecture-script.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 1,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 45170,
+      "chromaLeakPixels": 0,
+      "sha256": "d2dbe7b86ac3c6c4320b46ce36e63c9e2edc8862cebe4bf5cf702c187762d5f9"
+    },
+    {
+      "id": "prompt-tiered-homework",
+      "file": "prompt-tiered-homework.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 2,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 42341,
+      "chromaLeakPixels": 0,
+      "sha256": "3e3336ef4faadd94090d679b40fd18d25949ef3e3041b29a9ee0d03fed136e75"
+    },
+    {
+      "id": "prompt-test-builder",
+      "file": "prompt-test-builder.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 2,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 56631,
+      "chromaLeakPixels": 0,
+      "sha256": "af7b816e4d0b22b0d7b812f3a931dfe524b280f9805e8376e4da6f321e24a992"
+    },
+    {
+      "id": "prompt-mistake-analysis",
+      "file": "prompt-mistake-analysis.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 2,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 41908,
+      "chromaLeakPixels": 0,
+      "sha256": "f35682e06f3f4c8c7017b06688f01dbf84d21cada01f9da4cf084d628ae0dd4e"
+    },
+    {
+      "id": "prompt-essay-feedback",
+      "file": "prompt-essay-feedback.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 2,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 64977,
+      "chromaLeakPixels": 0,
+      "sha256": "240271123ad8227eb10a0641d3059f7d88ae41125c8a023eebffa9fdbd0c112f"
+    },
+    {
+      "id": "prompt-report-comment",
+      "file": "prompt-report-comment.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 3,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 44501,
+      "chromaLeakPixels": 0,
+      "sha256": "f6bcc16aeba6a6a95a53514b747659b4d5a538bfb5b6fdce985e5ab6f87be291"
+    },
+    {
+      "id": "prompt-socratic",
+      "file": "prompt-socratic.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 3,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 26372,
+      "chromaLeakPixels": 0,
+      "sha256": "fae7fc973b4664ae02ca66b5688544a5eb4a69c92ae723844e7b95201c3da291"
+    },
+    {
+      "id": "prompt-concept-explain",
+      "file": "prompt-concept-explain.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 3,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 30223,
+      "chromaLeakPixels": 0,
+      "sha256": "732a59636c92be5f59e187a11ad7cfd15ab9b87751d13d9e19a28b1337f6ce41"
+    },
+    {
+      "id": "prompt-abstract-polish",
+      "file": "prompt-abstract-polish.png",
+      "atlas": "atlas-b",
+      "cell": {
+        "row": 3,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 55250,
+      "chromaLeakPixels": 0,
+      "sha256": "05e0914cacfb550ac877b518308527ac2f393747442c3c1f49cc2a8dbc30d546"
+    },
+    {
+      "id": "prompt-literature-review",
+      "file": "prompt-literature-review.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 0,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 56445,
+      "chromaLeakPixels": 0,
+      "sha256": "e0e873d14d96c390ae8c21bbd0044ad6a1e1e97b659b8ce87feb56b41d496191"
+    },
+    {
+      "id": "prompt-teaching-reflection",
+      "file": "prompt-teaching-reflection.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 0,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 43252,
+      "chromaLeakPixels": 0,
+      "sha256": "bf6e473eeca2fc6ec70b8d6f154c7d6a008b126a62bf462f037252e1d73a1bbd"
+    },
+    {
+      "id": "prompt-school-notice",
+      "file": "prompt-school-notice.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 0,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 45323,
+      "chromaLeakPixels": 0,
+      "sha256": "fd3674a732286d26fae931dc132abc0f37bb13becb17642f4a66310b54a4f397"
+    },
+    {
+      "id": "prompt-parent-meeting",
+      "file": "prompt-parent-meeting.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 0,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 45242,
+      "chromaLeakPixels": 0,
+      "sha256": "c10fda0cdab69a90b15e5c7f8e7805c9c9fe12855fbac11b8ac8bd6e2adc2a18"
+    },
+    {
+      "id": "prompt-parent-dialogue",
+      "file": "prompt-parent-dialogue.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 1,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 31950,
+      "chromaLeakPixels": 0,
+      "sha256": "716d0ca67810175dba0b5b88c06a5064c2bb0a9c545c8f689fec516e522050e7"
+    },
+    {
+      "id": "prompt-class-meeting",
+      "file": "prompt-class-meeting.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 1,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 44290,
+      "chromaLeakPixels": 0,
+      "sha256": "af89b9c1bfc351342aaeaf0be938cb6ceb35a01d921f301a01ba5a667b7aa0d0"
+    },
+    {
+      "id": "prompt-library",
+      "file": "prompt-library.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 1,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 38272,
+      "chromaLeakPixels": 0,
+      "sha256": "d5db1e9ef8dac2915fac9bd03f680fc5ed26e4f0c88c053e50c3d8dc99ccdc98"
+    },
+    {
+      "id": "model-marketplace",
+      "file": "model-marketplace.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 1,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 46172,
+      "chromaLeakPixels": 0,
+      "sha256": "72aca46996670c968bc9b0a065b44a8848b18e8be625243fea12a45bf6fbf545"
+    },
+    {
+      "id": "category-all",
+      "file": "category-all.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 2,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 60058,
+      "chromaLeakPixels": 0,
+      "sha256": "4379f88e06a932278b2f3b28486a1578b5a5f4c52e4cfd443443a0e199f08d19"
+    },
+    {
+      "id": "category-teaching",
+      "file": "category-teaching.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 2,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 48812,
+      "chromaLeakPixels": 0,
+      "sha256": "a8306fdfbbbca0ff80018ac71baac4a4da3c80343e97c775c56da341115bf480"
+    },
+    {
+      "id": "category-courseware",
+      "file": "category-courseware.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 2,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 55395,
+      "chromaLeakPixels": 0,
+      "sha256": "a23dca91483f052520051f80c8b9976f38c84bb9e2cbde7026b7e65e99942e11"
+    },
+    {
+      "id": "category-assessment",
+      "file": "category-assessment.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 2,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 57044,
+      "chromaLeakPixels": 0,
+      "sha256": "48b9e82f2b8596eefa90e1cbeb101114b35039793723606e973df18802cbd923"
+    },
+    {
+      "id": "category-research",
+      "file": "category-research.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 3,
+        "column": 0
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 41501,
+      "chromaLeakPixels": 0,
+      "sha256": "25b208ffda0a2e318b7369144a6001cc593f698aa162a1db60f593df31429f36"
+    },
+    {
+      "id": "category-learning",
+      "file": "category-learning.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 3,
+        "column": 1
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 32298,
+      "chromaLeakPixels": 0,
+      "sha256": "c402ed94d5042df322088293b3bae8cc488dac0c711d327a9914a9ce74e9cd0b"
+    },
+    {
+      "id": "category-admin",
+      "file": "category-admin.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 3,
+        "column": 2
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 54964,
+      "chromaLeakPixels": 0,
+      "sha256": "0a30159d16d6af665f8de0e055272d5efef11016791fde21c7583eaa81a6a53c"
+    },
+    {
+      "id": "category-featured",
+      "file": "category-featured.png",
+      "atlas": "atlas-c",
+      "cell": {
+        "row": 3,
+        "column": 3
+      },
+      "width": 320,
+      "height": 320,
+      "alpha": true,
+      "visiblePixels": 49315,
+      "chromaLeakPixels": 0,
+      "sha256": "c16ce2cb883a59e87b2605ed2452d03c8bdff7f0bf918f15225cebf204c81d09"
+    }
+  ]
+}

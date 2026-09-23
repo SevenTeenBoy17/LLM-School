@@ -1,0 +1,40 @@
+services:
+  eduai-prism:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${EDUAI_BIND_ADDRESS:-127.0.0.1}:${EDUAI_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      EDUAI_DB_DIR: /data
+      EDUAI_ASSET_DIR: /data
+      EDUAI_ENABLE_DEMO_SEED: "false"
+      EDUAI_SESSION_SECRET: ${EDUAI_SESSION_SECRET:?set a strong session secret}
+      EDUAI_PUBLIC_ORIGIN: ${EDUAI_PUBLIC_ORIGIN:-}
+      EDUAI_BOOTSTRAP_ADMIN_USERNAME: ${EDUAI_BOOTSTRAP_ADMIN_USERNAME:-}
+      EDUAI_BOOTSTRAP_ADMIN_PASSWORD: ${EDUAI_BOOTSTRAP_ADMIN_PASSWORD:-}
+      EDUAI_BOOTSTRAP_ADMIN_NAME: ${EDUAI_BOOTSTRAP_ADMIN_NAME:-学校管理员}
+      EDUAI_TRUST_PROXY: "true"
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_IMAGE_API_KEY: ${LLM_IMAGE_API_KEY:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://api.llm-token.cn/v1}
+      LLM_IMAGE_BASE_URL: ${LLM_IMAGE_BASE_URL:-https://api.llm-token.cn/v1}
+      LLM_FALLBACK_BASE_URLS: ${LLM_FALLBACK_BASE_URLS:-}
+      EDUAI_LLM_ALLOWED_ORIGINS: ${EDUAI_LLM_ALLOWED_ORIGINS:-https://api.llm-token.cn,https://gpt-agent.cc}
+      EDUAI_IMAGE_MODEL: ${EDUAI_IMAGE_MODEL:-gpt-image-2}
+    volumes:
+      - eduai_internet_data:/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 35s
+    deploy:
+      replicas: 1
+
+volumes:
+  eduai_internet_data:

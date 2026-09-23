@@ -1,0 +1,10 @@
+{
+  "id": "eduai-manor-v5.2-1440x900",
+  "viewport": "1440x900",
+  "hashAlgorithm": "dHash-32x20",
+  "hashBits": 640,
+  "dHash": "C6F1252DC721B35A198D71F258DE7045E24E3633E118079164BC81A8E361C8B462CA95A5C1A729434B4D72815752868B9DB5A933C5EB5A1941D69619C47C2CE0682C69914325FB0E1015531D8895FA77",
+  "maxDistance": 64,
+  "approvedAt": "2026-08-25",
+  "approvalScope": "Large strict 4x4 field, four-edge HUD, learning nodes, and original manor art at the 1440x900 desktop acceptance viewport."
+}

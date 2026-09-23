@@ -1,0 +1,32 @@
+.sprite { display:grid; place-items:center; width:100%; aspect-ratio:1; pointer-events:none; }
+.sprite>span { display:block; background:url('/art/manor-v7/decorations.webp') no-repeat; }
+.placed { position:absolute; inset:0; pointer-events:none; z-index:12; }
+.placed button { position:absolute; transform:translate(-50%,-85%); width:8%; aspect-ratio:1; padding:0; border:0; background:transparent; pointer-events:auto; }
+.placed button:hover { filter:brightness(1.1); }
+.placed button:focus-visible { outline:3px solid #147caf; outline-offset:1px; border-radius:6px; }
+.warehouse { position:relative; }
+.toolbar,.tabs,.actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.toolbar { justify-content:space-between; padding-right:44px; }
+.toolbar>span { font-weight:700; font-variant-numeric:tabular-nums; }
+.tabs button[aria-pressed=true] { background:#375c3e; color:white; border-color:#375c3e; }
+.search { display:flex; gap:8px; align-items:center; border-bottom:1px solid #b7c6a0; margin:16px 0; }
+.search input { border:0; background:transparent; min-width:0; width:100%; min-height:44px; color:#263b28; }
+.refresh { position:absolute; right:0; top:0; padding:8px!important; min-width:44px; }
+.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:12px 0; }
+.grid article { border:1px solid #d5dabc; border-radius:6px; background:#fafbf5; padding:10px; text-align:center; }
+.grid .sprite { width:100px; max-width:100%; margin:auto; }
+.grid article h3 { font-size:14px; margin:6px 0; }
+.grid article p { font-size:12px; margin:6px 0; display:flex; align-items:center; justify-content:center; gap:4px; }
+.grid article>div { display:flex; gap:4px; flex-wrap:wrap; justify-content:center; }
+.grid article button { font-size:12px; padding:8px!important; }
+.confirm,.editor { border-top:2px solid #92ad74; padding:16px 0 0; margin-top:20px; }
+.confirm button { margin-right:8px; }
+.preview { position:relative; width:100%; aspect-ratio:16/9; background:url('/art/manor-v6/environment.webp') center/100% 100%; overflow:hidden; }
+.preview>span { position:absolute; width:8%; transform:translate(-50%,-85%); }
+.preview>span[data-preview] { filter:drop-shadow(0 0 4px white); outline:2px dashed #fff; }
+.positions { border:0; padding:12px 0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
+.positions label { min-height:44px; display:flex; align-items:center; gap:8px; }
+.positions input { width:18px; height:18px; accent-color:#375c3e; }
+.error { color:#9f352d!important; background:#ffede8; border-left:3px solid #b0483f; padding:10px; }
+@media(max-width:540px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .grid article { padding:8px; } .toolbar { gap:8px; } .positions { grid-template-columns:1fr; } }
+@media(prefers-reduced-motion:no-preference) { .placed button { transition:filter .12s ease; } }

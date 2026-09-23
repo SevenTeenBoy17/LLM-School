@@ -1,0 +1,127 @@
+{
+  "note": "字阶/圆角棘轮基线。目标：字号档 ≤7、圆角 ≤2（+pill 单列）。只许降不许升。",
+  "auditPredicate": "自身直接持有非空文本节点（含图标+文字混排）；旧口径为 children.length===0，漏计混排元素",
+  "recordedAt": "2026-08-19",
+  "knownFragility": "/student/growth 的档数取决于错题列表是否为空——本基线是**空态**测量。任何会创建错题的门（render.mjs R11）必须自行清理，否则下一次字阶门会报出一条看似排版回归、实为门污染门的假红。已在 R11 加 DELETE 收尾。",
+  "pages": {
+    "/login": {
+      "fontSizes": 3,
+      "radii": 2,
+      "fontSizeValues": [
+        "12px",
+        "13px",
+        "14px"
+      ],
+      "radiiValues": [
+        "12px",
+        "16px"
+      ]
+    },
+    "/portal": {
+      "fontSizes": 7,
+      "radii": 2,
+      "fontSizeValues": [
+        "12px",
+        "14px",
+        "16px",
+        "18px",
+        "28px",
+        "40px",
+        "56px"
+      ],
+      "radiiValues": [
+        "12px",
+        "20px"
+      ]
+    },
+    "/student/home": {
+      "fontSizes": 4,
+      "radii": 2,
+      "fontSizeValues": [
+        "12px",
+        "13px",
+        "14px",
+        "24px"
+      ],
+      "radiiValues": [
+        "12px",
+        "20px"
+      ]
+    },
+    "/chat": {
+      "fontSizes": 6,
+      "radii": 2,
+      "fontSizeValues": [
+        "11px",
+        "12.25px",
+        "12px",
+        "13px",
+        "14px",
+        "16px"
+      ],
+      "radiiValues": [
+        "12px",
+        "20px"
+      ]
+    },
+    "/student/growth": {
+      "fontSizes": 2,
+      "radii": 2,
+      "fontSizeValues": [
+        "13px",
+        "24px"
+      ],
+      "radiiValues": [
+        "12px",
+        "20px"
+      ]
+    },
+    "/dashboard": {
+      "fontSizes": 6,
+      "radii": 2,
+      "fontSizeValues": [
+        "11px",
+        "12px",
+        "13px",
+        "14px",
+        "18px",
+        "24px"
+      ],
+      "radiiValues": [
+        "12px",
+        "20px"
+      ]
+    },
+    "/prompts": {
+      "fontSizes": 5,
+      "radii": 2,
+      "fontSizeValues": [
+        "11px",
+        "12px",
+        "13px",
+        "14px",
+        "24px"
+      ],
+      "radiiValues": [
+        "12px",
+        "20px"
+      ]
+    },
+    "/class": {
+      "fontSizes": 6,
+      "radii": 2,
+      "fontSizeValues": [
+        "11px",
+        "12px",
+        "13px",
+        "14px",
+        "18px",
+        "24px"
+      ],
+      "radiiValues": [
+        "12px",
+        "20px"
+      ]
+    }
+  }
+}

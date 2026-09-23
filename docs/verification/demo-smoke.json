@@ -1,0 +1,39 @@
+{
+  "mode": "demo",
+  "ok": true,
+  "cases": [
+    {
+      "role": "student",
+      "login": 200,
+      "route": "/student/manor",
+      "status": 200
+    },
+    {
+      "role": "teacher",
+      "login": 200,
+      "route": "/knowledge/resources",
+      "status": 200
+    },
+    {
+      "role": "admin",
+      "login": 200,
+      "route": "/admin/permissions",
+      "status": 200
+    }
+  ],
+  "pageErrors": [],
+  "assets": [
+    {
+      "path": "/art/manor-v7/decorations.webp",
+      "status": 200
+    },
+    {
+      "path": "/3d/globe.glb",
+      "status": 200
+    },
+    {
+      "path": "/login-bg.mp4",
+      "status": 200
+    }
+  ]
+}

@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Codex Skills 安全审计与调用指南</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #152238;
+      --muted: #607087;
+      --line: #dce3eb;
+      --soft: #f5f7fa;
+      --blue: #1769e0;
+      --green: #16794b;
+      --green-bg: #eaf7f0;
+      --amber: #8a5700;
+      --amber-bg: #fff4d8;
+      --red: #a33232;
+      --red-bg: #fff0f0;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--soft);
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    header, main, footer { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 32px 0 20px; }
+    h1 { margin: 0 0 8px; font-size: 30px; line-height: 1.2; letter-spacing: 0; }
+    h2 { margin: 0 0 14px; font-size: 19px; letter-spacing: 0; }
+    h3 { margin: 0 0 8px; font-size: 15px; letter-spacing: 0; }
+    p { margin: 0; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .subtitle { color: var(--muted); max-width: 860px; }
+    .band { background: var(--white); border-block: 1px solid var(--line); }
+    .band-inner { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 20px 0; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+    .stat { background: var(--white); padding: 16px; min-height: 96px; }
+    .stat strong { display: block; font-size: 25px; line-height: 1.1; }
+    .stat span { display: block; margin-top: 7px; color: var(--muted); }
+
+    main { padding: 24px 0 44px; }
+    section { margin-bottom: 28px; }
+    .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .audit-card { background: var(--white); border: 1px solid var(--line); border-radius: 6px; padding: 18px; }
+    .audit-meta { color: var(--muted); font-family: ui-monospace, "Cascadia Code", monospace; font-size: 12px; overflow-wrap: anywhere; }
+    .checklist { margin: 14px 0 0; padding: 0; list-style: none; }
+    .checklist li { padding: 7px 0; border-top: 1px solid var(--line); }
+    .checklist li:first-child { border-top: 0; }
+
+    .status, .source, .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .status.pass { color: var(--green); background: var(--green-bg); }
+    .status.caution { color: var(--amber); background: var(--amber-bg); }
+    .status.degraded { color: var(--red); background: var(--red-bg); }
+    .source.global { color: #175c9c; background: #e9f3ff; }
+    .source.system { color: #5b3b83; background: #f3edfb; }
+    .source.plugin { color: #7c4f00; background: #fff2d6; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+    .flow div { padding: 14px; border-right: 1px solid var(--line); }
+    .flow div:last-child { border-right: 0; }
+    .flow b { display: block; color: var(--green); }
+    .flow span { color: var(--muted); font-size: 12px; }
+
+    .new-skills { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line); }
+    th, td { padding: 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-size: 12px; background: #f8fafc; }
+    tr:last-child td { border-bottom: 0; }
+    code { color: #124f9f; background: #edf4ff; padding: 1px 4px; border-radius: 3px; overflow-wrap: anywhere; }
+
+    .inventory-tools {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .search-field { min-width: 0; }
+    input[type="search"] {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid #b9c5d3;
+      border-radius: 5px;
+      padding: 8px 12px;
+      font: inherit;
+      background: var(--white);
+      color: var(--ink);
+    }
+    input[type="search"]:focus { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .filters { display: inline-flex; border: 1px solid #b9c5d3; border-radius: 5px; overflow: hidden; background: var(--white); }
+    .filters button {
+      border: 0;
+      border-right: 1px solid #b9c5d3;
+      min-height: 40px;
+      padding: 7px 12px;
+      background: var(--white);
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+    }
+    .filters button:last-child { border-right: 0; }
+    .filters button[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+    .inventory-summary { color: var(--muted); margin-bottom: 10px; }
+    .inventory-wrap { overflow: auto; border: 1px solid var(--line); background: var(--white); max-height: 690px; }
+    .inventory { width: 100%; border-collapse: collapse; min-width: 860px; }
+    .inventory thead { position: sticky; top: 0; z-index: 1; }
+    .inventory tbody tr:hover { background: #f7faff; }
+    .skill-name { font-weight: 750; overflow-wrap: anywhere; }
+    .purpose { max-width: 520px; }
+    .trigger { color: var(--muted); min-width: 220px; }
+    .note { margin-top: 10px; color: var(--muted); font-size: 12px; }
+    footer { padding: 0 0 32px; color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 820px) {
+      h1 { font-size: 25px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .audit-grid { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      .flow div { border-right: 0; border-bottom: 1px solid var(--line); }
+      .flow div:last-child { border-bottom: 0; }
+      .inventory-tools { grid-template-columns: 1fr; }
+      .filters { width: 100%; }
+      .filters button { flex: 1; padding-inline: 6px; }
+      .new-skills,
+      .new-skills tbody,
+      .new-skills tr,
+      .new-skills td { display: block; width: 100%; }
+      .new-skills thead { display: none; }
+      .new-skills tr { padding: 8px 0; border-bottom: 1px solid var(--line); }
+      .new-skills tr:last-child { border-bottom: 0; }
+      .new-skills td {
+        display: grid;
+        grid-template-columns: 76px minmax(0, 1fr);
+        gap: 10px;
+        border-bottom: 0;
+        padding: 8px 12px;
+        overflow-wrap: anywhere;
+      }
+      .new-skills td::before {
+        content: attr(data-label);
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Codex Skills 安全审计与调用指南</h1>
+    <p class="subtitle">审计对象固定到 GitHub 提交 SHA；安装仅包含实际技能目录，不包含仓库 CLI、依赖、图片、CI 或打包脚本。报告时间：2026-08-23。</p>
+  </header>
+
+  <div class="band">
+    <div class="band-inner stats">
+      <div class="stat"><strong>2</strong><span>外部仓库完成审计</span></div>
+      <div class="stat"><strong>55</strong><span>受版本控制文件全部读取</span></div>
+      <div class="stat"><strong>0</strong><span>npm 已知漏洞</span></div>
+      <div class="stat"><strong id="skill-count">-</strong><span>技能索引（含 2 项新安装）</span></div>
+    </div>
+  </div>
+
+  <main>
+    <section>
+      <h2>安装链路</h2>
+      <div class="flow" aria-label="安装验证流程">
+        <div><b>1. 远端核对</b><span>GitHub 连接器 + 远端分支</span></div>
+        <div><b>2. 全文件读取</b><span>53 文本 + 2 二进制</span></div>
+        <div><b>3. 风险扫描</b><span>命令、网络、凭据、载荷、依赖</span></div>
+        <div><b>4. 固定 SHA 安装</b><span>避免审计与安装错位</span></div>
+        <div><b>5. 内容复核</b><span>文件数 + 归一化 SHA-256</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>仓库结论</h2>
+      <div class="audit-grid">
+        <article class="audit-card">
+          <div class="status pass">允许安装</div>
+          <h3>advise-project-approach</h3>
+          <p class="audit-meta">88f1ecc7229f95f066c6e00bda3bdf901595a117</p>
+          <ul class="checklist">
+            <li>31 个文件；技能安装内容仅 2 个文本文件。</li>
+            <li>无运行时脚本、自动网络请求、凭据读取或命令执行。</li>
+            <li>默认只读研究；修改、安装依赖和外部动作要求另行授权。</li>
+          </ul>
+        </article>
+        <article class="audit-card">
+          <div class="status caution">允许安装，已本地加固</div>
+          <h3>neuroarxiv</h3>
+          <p class="audit-meta">b5d20efa12dd1ba177ce890d56809d2e027f8055</p>
+          <ul class="checklist">
+            <li>24 个文件；技能安装内容仅 1 个 Markdown 文件。</li>
+            <li>调用时会访问 arXiv，并可能创建多个隔离分析任务，成本与等待时间较高。</li>
+            <li>上游缺少完整提示注入边界；全局副本已禁止分支工具、继续委派、文件/网络/凭据访问，并增加父任务结构校验。</li>
+            <li>仓库 companion CLI 仍把不可信论文内容跨轮送入读取、评分、聚类和收敛提示，存在建议完整性 P2；CLI 禁用工具可降低直接执行风险，但本地 Skill 加固不会修改该 CLI。</li>
+            <li>仓库 companion CLI 的 <code>--context</code> 会把指定文件发送到外部模型；CLI 未随 Skill 安装，若另行使用必须排除密钥和私密文件。</li>
+          </ul>
+        </article>
+      </div>
+      <p class="note"><span class="status degraded">降级项</span> Codex Security 托管 Deep Scan 因缺少 managed filesystem permission profile 未启动；Microsoft Defender 自定义扫描也被本机服务拒绝。已由逐文件静态审计、官方 npm audit、二进制结构检查、独立审阅与安装后哈希验证补位。</p>
+    </section>
+
+    <section>
+      <h2>审计证据</h2>
+      <table class="new-skills">
+        <thead><tr><th>检查项</th><th>命令或对象</th><th>结果</th><th>边界</th></tr></thead>
+        <tbody>
+          <tr><td data-label="检查项">远端一致性</td><td data-label="命令对象"><code>git ls-remote</code> + 本地 <code>rev-parse HEAD</code></td><td data-label="结果">两个默认分支均与已审计 SHA 完全一致。</td><td data-label="边界">未验证提交签名或作者身份。</td></tr>
+          <tr><td data-label="检查项">依赖漏洞</td><td data-label="命令对象"><code>npm audit --registry=https://registry.npmjs.org</code></td><td data-label="结果">2026-08-23：info/low/moderate/high/critical 均为 0；生产与开发依赖共 51 项记录。</td><td data-label="边界">审计结论随 npm 公告变化；后续升级依赖时需要重新执行。</td></tr>
+          <tr><td data-label="检查项">安装钩子与动态验证</td><td data-label="命令对象"><code>npm ci --ignore-scripts</code>、typecheck、test、build、pack dry-run</td><td data-label="结果">隔离目录安装 11 个适用包；类型检查、7 项测试与构建通过；<code>npm pack</code> 仅触发已审阅的 TypeScript 构建。</td><td data-label="边界">全局 Skill 安装仍只包含技能目录，不包含 Node CLI、依赖或生命周期钩子。</td></tr>
+          <tr><td data-label="检查项">二进制结构</td><td data-label="命令对象"><code>.skill</code> ZIP、SVG、PNG chunk/XMP</td><td data-label="结果">无路径穿越、活动 SVG、尾随 PNG 数据；PNG 含 Canva 文档/用户/品牌标识元数据。</td><td data-label="边界">PNG 未安装；公开再分发前建议清除元数据。</td></tr>
+          <tr><td data-label="检查项">安装完整性</td><td data-label="命令对象">文件数 + LF 归一化 SHA-256</td><td data-label="结果">原始安装内容与固定提交一致；<code>neuroarxiv</code> 随后加入本地安全加固。</td><td data-label="边界">加固内容是本地差异，不冒充上游原文。</td></tr>
+          <tr><td data-label="检查项">不可用扫描</td><td data-label="命令对象">Codex Security / Microsoft Defender</td><td data-label="结果">前者缺少 managed filesystem permission profile；后者返回自定义扫描失败。</td><td data-label="边界">两项均不计为已通过证据。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="new-skills">
+      <h2>新安装技能</h2>
+      <table class="new-skills">
+        <thead><tr><th>技能</th><th>何时触发</th><th>主要用途</th><th>条件与边界</th></tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="技能"><code>$advise-project-approach</code><br><span class="status pass">已安装·当前可调用</span></td>
+            <td data-label="何时触发">项目立项、技术栈/架构选择、成本比较、中途纠偏、完工评审；也可显式点名。</td>
+            <td data-label="主要用途">研究可比项目，形成主方案、备选方案、代价、失效条件和优先行动。</td>
+            <td data-label="条件边界">窄范围单一 bug 或孤立文件修改不自动触发；默认只读，时效性信息需要联网核验。</td>
+          </tr>
+          <tr>
+            <td data-label="技能"><code>$neuroarxiv</code><br><span class="status pass">已安装·当前可调用</span></td>
+            <td data-label="何时触发">显式说“查 arXiv/查 prior art/运行 NeuroArxiv”，或开放式的非平凡算法、协议、ML/系统架构决策。</td>
+            <td data-label="主要用途">真实检索 arXiv，隔离阅读论文，评分聚类后给出一个有引用的推荐路径。</td>
+            <td data-label="条件边界">需要联网；通常约 12–20 篇、N+4 次分析调用；不适合 CRUD、胶水代码或用户已指定方案的任务。若另行使用仓库 CLI，禁止把密钥、<code>.env</code> 或私密代码作为 <code>--context</code>。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>已安装与可调用技能</h2>
+      <div class="inventory-tools">
+        <div class="search-field"><label class="sr-only" for="search">搜索技能、用途或触发条件</label><input id="search" type="search" aria-label="搜索技能、用途或触发条件" placeholder="搜索技能、用途或触发条件" autocomplete="off"></div>
+        <div class="filters" role="group" aria-label="技能来源筛选">
+          <button type="button" data-filter="all" aria-pressed="true">全部</button>
+          <button type="button" data-filter="global" aria-pressed="false">全局</button>
+          <button type="button" data-filter="system" aria-pressed="false">系统</button>
+          <button type="button" data-filter="plugin" aria-pressed="false">插件</button>
+        </div>
+      </div>
+      <p id="inventory-summary" class="inventory-summary" role="status" aria-live="polite" aria-atomic="true">正在读取技能索引…</p>
+      <div class="inventory-wrap">
+        <table class="inventory">
+          <thead><tr><th>来源</th><th>技能</th><th>用途</th><th>触发规则</th></tr></thead>
+          <tbody id="inventory-body"></tbody>
+        </table>
+      </div>
+      <p class="note">“自动触发”指当前请求与技能 frontmatter 描述明显匹配；显式点名优先。插件只有在配置启用且相应服务可用时才能完成外部操作。两项新技能已经写入全局目录，并已在当前上下文中确认可调用。</p>
+    </section>
+  </main>
+
+  <footer>数据源：本机全局技能目录、系统技能目录及当前配置中启用插件的活动版本。未把缓存中的旧版本、upstream 副本或无 SKILL.md 的应用连接器冒充为可调用技能。</footer>
+
+  <script src="./Codex-Skills-清单数据-2026-08-23.js"></script>
+  <script>
+    (() => {
+      const data = Array.isArray(window.SKILL_INVENTORY) ? window.SKILL_INVENTORY : [];
+      const body = document.getElementById('inventory-body');
+      const summary = document.getElementById('inventory-summary');
+      const count = document.getElementById('skill-count');
+      const search = document.getElementById('search');
+      const buttons = [...document.querySelectorAll('[data-filter]')];
+      let filter = 'all';
+
+      const sourceLabel = { global: '全局', system: '系统', plugin: '插件' };
+      const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[ch]);
+
+      function render() {
+        const q = search.value.trim().toLocaleLowerCase('zh-CN');
+        const rows = data.filter((item) => {
+          const sourceOk = filter === 'all' || item.sourceType === filter;
+          const haystack = `${item.name} ${item.purpose} ${item.trigger} ${item.provider || ''}`.toLocaleLowerCase('zh-CN');
+          return sourceOk && (!q || haystack.includes(q));
+        });
+
+        body.innerHTML = rows.map((item) => `
+          <tr>
+            <td><span class="source ${escapeHtml(item.sourceType)}">${sourceLabel[item.sourceType] || '其他'}</span>${item.provider ? `<div class="note">${escapeHtml(item.provider)}</div>` : ''}</td>
+            <td><div class="skill-name">${escapeHtml(item.name)}</div>${item.pending ? '<span class="status caution">已安装·下轮发现</span>' : ''}</td>
+            <td class="purpose">${escapeHtml(item.purpose)}</td>
+            <td class="trigger">${escapeHtml(item.trigger)}</td>
+          </tr>`).join('');
+
+        summary.textContent = `显示 ${rows.length} / ${data.length} 项`;
+      }
+
+      count.textContent = String(data.length || 0);
+      search.addEventListener('input', render);
+      buttons.forEach((button) => button.addEventListener('click', () => {
+        filter = button.dataset.filter;
+        buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+        render();
+      }));
+      render();
+    })();
+  </script>
+</body>
+</html>

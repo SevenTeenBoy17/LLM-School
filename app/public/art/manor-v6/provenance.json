@@ -1,0 +1,16 @@
+{
+  "version": "manor-v6-20260920",
+  "origin": "Original generated art; no QQ/SWF assets copied into this runtime set",
+  "generator": "Built-in image_gen.imagegen",
+  "model": "Tool-managed; no selectable model identifier was exposed",
+  "modelClaim": "Not claimed as image-2.5",
+  "promptNote": "The briefs below are authored production specifications, not recovered proprietary prompts.",
+  "assets": [
+    { "file": "environment.webp", "source": "environment.png", "generationOutput": "exec-6ca4545c-9175-4ffe-9457-3cb60ce5f886.png", "brief": { "style": "Bright hand-painted isometric educational farm", "composition": "Open central meadow; greenhouse left, cottage behind, workshop right", "exclude": ["crops", "plots", "account numbers", "HUD", "logos", "text"] } },
+    { "file": "crops.webp", "source": "crops.png", "generationOutput": "exec-b4d9366b-2167-49e3-934d-f5973a3cb4fb.png", "brief": { "layout": "Six columns and four growth stages on white", "columns": ["wheat", "tomato", "bean", "rice", "sunflower", "bamboo"], "style": "Hand-painted botanical farm sprites", "exclude": ["text", "UI", "logos"] }, "runtime": "CSS sprite positioning; SVG color matrix plus SourceAlpha composition removes white at render time" },
+    { "file": "terrain.webp", "source": "terrain.png", "generationOutput": "exec-efba5842-64a9-483f-8d22-f5a0c5d5cf2e.png", "brief": { "layout": "Two side-by-side isometric diamond tiles with transparent background", "tiles": ["cultivated soil", "grass"], "exclude": ["crops", "icons", "text", "locks"] } }
+  ],
+  "conversion": "Sharp PNG-to-WebP encoding; no third-party image editing service",
+  "rightsBoundary": "Generated output provenance is recorded; it is not a trademark clearance or a guarantee of copyright registration.",
+  "hashes": "sha256.json"
+}

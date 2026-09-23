@@ -1,0 +1,69 @@
+{
+  "note": "色彩迁移**棘轮**基线：只许降不许升，新增裸色即 FAIL。不宣称已归零——归零需要把全部 80 处渐变与 300+ 处 hex 迁完，那是分批工作；棘轮保证每一批都不回流。",
+  "recordedAt": "2026-08-03",
+  "total": {
+    "gradients": 89,
+    "hex": 373
+  },
+  "canvasExcluded": {
+    "reason": "§1.2：canvas 不纳入色门（也因此不得承载功能性配色）",
+    "files": [
+      "components/login/OrbitalSystem.tsx",
+      "components/login/OrbitalSystem3D.tsx"
+    ],
+    "gradients": 9,
+    "hex": 50
+  },
+  "counted": {
+    "gradients": 1,
+    "hex": 24
+  },
+  "mustBeZero": [
+    "lib/data/agents.ts",
+    "lib/data/prompts.ts"
+  ],
+  "migrated": [
+    "lib/data/prompts.ts：18 处渐变 → 枚举键；9 个按类别着色的 hex → 统一 --accent-focus（§3.1 R1 禁止颜色表达归属）",
+    "lib/data/agents.ts：8 处渐变 → 枚举键",
+    "lib/server/db.ts：6 处渐变 → 枚举键；46 处 hex 全清（图表色改走 CHART_PALETTE；8 个学科色板与 5 个模型厂牌色按 §3.1 R1「颜色不表达归属」收敛为单一 --accent-tint/--accent-focus；漏斗与好评图例改语义令牌）",
+    "第五批：admin.ts 29→0（其中 15 处属四个零引用导出，直接删）；lib/data/knowledge.ts 与 lib/data/learn.ts **整файл删除**（全部导出零引用，共 36 hex）；hub 三张推荐卡厂牌色渐变→枚举键；Sidebar 选中条与头像块→令牌（顺带修一处对比度 4.36:1 的 AA 边缘不达标）",
+    "第六批：新增 MODEL_PALETTE（5 槽，值全部引用 CHART_PALETTE，本文件 hex 计数不变）+ tonalPair 同色系渐变；models.ts 15→0（含删除无人读取的 color 死字段）；profile 头像与侧边栏统一；BrandLogo 字标记为豁免",
+    "第七批（收尾）：chat/ChatSidebar/MessageBubble 的 var(--x,字面量) 兜底 → 真令牌（--danger-*/--warn-border 从未定义过）；AgentKanban 状态色与类别色；TrendChart 图表描边；QuestCard/PagePlaceholder/EduArt；宵禁遮罩 → --night-overlay（主题无关）；**globals.css 里 8 个零引用厂牌色令牌 + 8 条悬空 @theme 映射一并删除**"
+  ],
+  "topOffenders": {
+    "app/(shell)/hub/page.tsx": {
+      "gradients": 3,
+      "hex": 6
+    },
+    "lib/data/admin.ts": {
+      "gradients": 0,
+      "hex": 29
+    },
+    "components/shell/Sidebar.tsx": {
+      "gradients": 2,
+      "hex": 5
+    },
+    "app/login/page.tsx": {
+      "gradients": 1,
+      "hex": 10
+    },
+    "components/login/Constellation.tsx": {
+      "gradients": 1,
+      "hex": 8
+    }
+  },
+  "topOffendersNote": "取靶清单，随每批迁移刷新；上一版仍指向 knowledge/ChatSidebar/dashboard.ts 等早已迁完的文件。",
+  "scopedException": {
+    "files": [
+      "components/common/BrandLogo.tsx",
+      "components/login/Globe3DUnlock.tsx",
+      "lib/client/exportChat.ts",
+      "app/layout.tsx"
+    ],
+    "reason": "本条曾经把整个「登录家族」一起豁免，理由写的是「登录页是门户样板，刻意与应用壳不同调（深靛蓝 hero + 新拟态浅卡 + 青绿 CTA）」。\n**那条理由现已作废**：登录页已挂 data-register=\"portal\" 与门户共用令牌层（不再是「刻意不同调」），青绿 CTA 也已统一为钴蓝（它白字只有 2.49:1，不过 AA）。\n随之 login/page.tsx、Constellation.tsx、CardCarousel.tsx、PlanetGlyph.tsx 四件已全部迁完并移出本名单；WebDevMark.tsx 是零引用的死代码（且是模板残留的「Web Dev」字标，不是本产品品牌），已删除。\n\n以下四处**留在计数里**，各有各的结构性理由：\n\n① BrandLogo.tsx（6）— 产品**字标本身**。前几批收敛学科色/角色色/厂牌色的理由都是「身份已由文字承载，颜色是第二遍编码」；这条理由在字标上不成立：字标的颜色就是它的身份，而它本身就是文字，没有另一条通道可退守。压成单色等于抹掉品牌。\n\n② Globe3DUnlock.tsx（10）— Three.js 材质色。`meshPhysicalMaterial` 的 color/emissive 由 WebGL 着色器消费，**读不到 CSS 自定义属性**，令牌在这里没有落点。\n   注意：它与已在 canvasExcluded 里的 OrbitalSystem 两件属**同一技术类别**，按理可以一并排除。**刻意不排除**——把它挪进豁免会让计数凭空降 10 而运行时颜色分毫未变，那是修指标不是修问题。留在计数里，靠棘轮盯住不许再涨。\n\n③ exportChat.ts — 生成的是**离开本站的独立 HTML 文件**，收件人打开时没有本站 CSS 变量可用，字面量是结构性必需。\n\n④ layout.tsx — 两个 `themeColor` meta，由浏览器/系统读取以着色地址栏，CSS 变量在该处不生效，同属结构性必需。"
+  },
+  "newGates": {
+    "C5": "禁止 var(--令牌, 字面量) 兜底——令牌未定义时真正生效的是字面量，而代码读起来像已走治理，且 grep var(-- 会把它算成已迁移。",
+    "C6": "令牌层不得留存已废弃厂牌色——本门只扫 .tsx?，不扫 CSS；厂牌色藏在 globals.css 可以永远不被计数。"
+  }
+}

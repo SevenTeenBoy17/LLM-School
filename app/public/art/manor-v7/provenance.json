@@ -1,0 +1,25 @@
+{
+  "version": "manor-v7-decorations-1",
+  "createdAt": "2026-09-23",
+  "method": "built-in image_gen, original generation with original manor-v6 style reference",
+  "modelSelection": "not exposed by tool; no image-2.5 model claim",
+  "reference": "../manor-v6/environment.webp",
+  "source": "decorations.png",
+  "runtime": "decorations.webp",
+  "dimensions": [1254, 1254],
+  "grid": [3, 3],
+  "alpha": true,
+  "sha256": {
+    "decorations.png": "EED83F4DBE7797A9F1034E00B62986BC25CEE7467CAB69602370443E76747C9D",
+    "decorations.webp": "9BB88F6FA4A9727F3DD5283726F6079CB7484EDC9AAD69F0E641F7B4E3432BBC"
+  },
+  "items": ["flower", "bush", "path", "tree", "bench", "pond", "house", "tower", "library"],
+  "prompt": "Original hand-painted isometric school farm 3x3 transparent sprite atlas. Equal cells, complete objects with transparent margins. Upper-left daylight, crisp olive outlines, timber, terracotta, clear greens and blue. Row1 flowerbed, shrub, flagstone; row2 pine, bench, pond; row3 garden shed, lookout, reading cottage. No text, logos, UI, account data or baked background. Match original v6 painting technique.",
+  "anchor": "measured rectangular crop per sprite, centered in a stable square; world position uses bottom-center",
+  "measuredCrops": {
+    "flower": [20, 60, 385, 310], "bush": [455, 50, 350, 330], "path": [850, 100, 390, 270],
+    "tree": [65, 395, 320, 398], "bench": [455, 455, 350, 335], "pond": [850, 495, 390, 295],
+    "house": [20, 812, 424, 415], "tower": [455, 792, 325, 440], "library": [810, 819, 436, 414]
+  },
+  "scope": "original project artwork; no extracted QQ Farm sprites included"
+}

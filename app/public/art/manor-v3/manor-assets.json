@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0",
+  "collection": "eduai-manor-v5.2",
+  "createdAt": "2026-08-25T00:00:00.000Z",
+  "runtimeModelCalls": false,
+  "copyrightBoundary": "Original EduAI artwork. A lawful product reference informed only broad scene hierarchy and interaction scale; no reference pixels, logos, characters, text, crops, or proprietary UI assets are shipped.",
+  "assets": [
+    {
+      "id": "manor-world",
+      "file": "manor-world.webp",
+      "role": "full-bleed desktop learning manor scene",
+      "source": "OpenAI built-in image generation",
+      "version": "2.0.0",
+      "dimensions": { "width": 2560, "height": 1440 },
+      "sha256": "EDF8389A41B1EBBAA0B2572BA5E8F429DD6E7711A584B20CED2D8550D586021B",
+      "promptSummary": "Original bright isometric educational farm; one large strict 4x4 field occupies half the canvas; four compact learning landmarks stay at the perimeter; no people, labels, logos, currency, or UI."
+    },
+    {
+      "id": "manor-world-preview",
+      "file": "manor-world-preview.webp",
+      "role": "loading-state preview",
+      "source": "Derived locally from manor-world",
+      "version": "2.0.0",
+      "dimensions": { "width": 960, "height": 540 },
+      "sha256": "0DD2B1FDAFEBF3B084A6E9B73716E3A266BFAEA80F6FC001AA96FABB1EAF0E64",
+      "promptSummary": "Downscaled preview of the original full scene."
+    }
+  ]
+}

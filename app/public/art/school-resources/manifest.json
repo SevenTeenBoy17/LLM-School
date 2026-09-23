@@ -1,0 +1,89 @@
+{
+  "generatedBy": "GPT image generation tool; corrected to green background in a second generation",
+  "sourceSha256": "a1a5713c622dd2d826513400e6b15136e27c621d5dca31af111c5fc8b9ac8390",
+  "sourceSize": [
+    1536,
+    1024
+  ],
+  "outputSize": [
+    320,
+    320
+  ],
+  "nativeResolutionOnly": true,
+  "artDirection": "Tactile enamel teaching stationery; teal library/upload, coral slides, blue lesson, amber folder; flat chroma green source; no baked-in labels.",
+  "processing": "Chroma key, green edge decontamination, per-cell content bounds, lossless transparent WebP; no AI upscaling.",
+  "entries": [
+    {
+      "name": "library",
+      "sha256": "7d8a6329424bf35952c1cb0574f6b2858759cf006349ede9966025ea3bdc73b6",
+      "size": 84786,
+      "sourceBounds": {
+        "left": 97,
+        "top": 109,
+        "right": 434,
+        "bottom": 432
+      },
+      "transparentPixels": 167823
+    },
+    {
+      "name": "upload",
+      "sha256": "4d0cbe172cf2e383d9a16b5efec2697cb92c446ddae893be67a0f8886364da66",
+      "size": 64188,
+      "sourceBounds": {
+        "left": 74,
+        "top": 104,
+        "right": 437,
+        "bottom": 429
+      },
+      "transparentPixels": 173585
+    },
+    {
+      "name": "slides",
+      "sha256": "53911417d80324422cf8ede816063fd13eb46de3c63b85939d4389cea69d0d63",
+      "size": 61968,
+      "sourceBounds": {
+        "left": 107,
+        "top": 75,
+        "right": 419,
+        "bottom": 437
+      },
+      "transparentPixels": 184976
+    },
+    {
+      "name": "lesson",
+      "sha256": "5c76507858ad6906497e685d65d21de93e73872e2d3101ae64c64d4df3e19a2c",
+      "size": 60340,
+      "sourceBounds": {
+        "left": 52,
+        "top": 87,
+        "right": 462,
+        "bottom": 379
+      },
+      "transparentPixels": 167126
+    },
+    {
+      "name": "worksheet",
+      "sha256": "729915db8b97fe3c1c51b8c19be1b084d5b248e48df39c7ffac73a805f71620a",
+      "size": 73520,
+      "sourceBounds": {
+        "left": 101,
+        "top": 42,
+        "right": 450,
+        "bottom": 408
+      },
+      "transparentPixels": 158069
+    },
+    {
+      "name": "folder",
+      "sha256": "2f8bdc80ffe45ac4849fa825dfe54130068ff9aedbc152601afd014b9e2e35a7",
+      "size": 76532,
+      "sourceBounds": {
+        "left": 96,
+        "top": 73,
+        "right": 454,
+        "bottom": 399
+      },
+      "transparentPixels": 164884
+    }
+  ]
+}

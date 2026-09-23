@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "file": "teacher-nav-atlas-v2.webp",
+  "grid": { "columns": 4, "rows": 4 },
+  "dimensions": { "width": 896, "height": 896 },
+  "sha256": "8f13cc1cd4491b1058711e558bb6adaec978e557366e2acd20f3ff390703cc58",
+  "source": "OpenAI built-in ImageGen with deterministic chroma-key cleanup",
+  "generatedAt": "2026-08-31",
+  "style": "Original soft-clay 3D education icon family with normalized transparent cells",
+  "promptSummary": "Preserve the sixteen semantic teacher-workspace icons, remove artifacts, use a uniform chroma source, then normalize each visible silhouette into a centered 224px cell",
+  "normalization": {
+    "cellSize": 224,
+    "visualBox": 188,
+    "background": "transparent",
+    "componentCleanup": "isolated and cross-cell fragments removed",
+    "centering": "alpha-bounds centered per cell"
+  },
+  "cells": [
+    "dashboard",
+    "class",
+    "manor-evidence",
+    "chat",
+    "prompts",
+    "knowledge",
+    "research-center",
+    "research-paper",
+    "research-prep",
+    "research-courseware",
+    "research-artifacts",
+    "hub",
+    "agent",
+    "profile",
+    "preferences",
+    "logout"
+  ]
+}

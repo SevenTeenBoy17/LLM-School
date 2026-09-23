@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-08-30",
+  "assets": [
+    {
+      "id": "prism-learning-workbench-v1",
+      "file": "prism-learning-workbench-v1.webp",
+      "kind": "onboarding-and-chat-illustration",
+      "source": "OpenAI built-in image generation",
+      "dimensions": "1000x750",
+      "sha256": "6E7D7FB33539C3729E956F251F8E7BC2C44362B8FABFEAD560569B53767BCF96",
+      "promptSummary": "Original object-only 3D learning workbench with an open book, frosted-glass prism and study tools; explicitly no people, characters, mascots, brand marks or text.",
+      "runtimeModelCalls": false
+    }
+  ]
+}

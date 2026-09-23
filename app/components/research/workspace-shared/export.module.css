@@ -1,0 +1,17 @@
+.dialog { width: min(720px, calc(100vw - 32px)); }
+.summary { display: flex; justify-content: space-between; gap: 14px; color: #344154; }
+.summary span { font-size: 13px; color: #617084; }
+.progress { margin-top: 12px; height: 8px; background: #e7edf6; border-radius: 4px; overflow: hidden; }
+.progress div { height: 100%; width: 100%; background: #2864d8; transform-origin: left; transition: transform .18s; }
+.files { padding: 0; margin: 24px 0; list-style: none; }
+.files li { display: flex; align-items: center; gap: 14px; padding: 16px 0; border-bottom: 1px solid #e0e6ef; color: #64748b; }
+.files li>div { flex: 1; min-width: 0; }
+.files strong { display: block; font-weight: 550; color: #253143; overflow-wrap: anywhere; }
+.files span { display: block; font-size: 12px; }
+.ok { color: #147d70; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: #acb5c4; }
+.hint { color: #687588; font-size: 12px; }
+.error { color: #a33e36; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; padding-top: 20px; }
+.dock { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 40; display: flex; align-items: center; gap: 8px; border: 1px solid #c9d4e6; border-radius: 8px; padding: 12px 18px; color: #275fbd; background: #fefeff; box-shadow: 0 6px 24px #1a31522b; cursor: pointer; }
+@media(prefers-reduced-motion:reduce) { .progress div { transition: none; } }

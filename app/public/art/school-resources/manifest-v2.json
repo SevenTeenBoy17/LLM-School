@@ -1,0 +1,30 @@
+{
+  "generatedBy": "Built-in GPT image generation, one asset per call",
+  "processing": "User-requested green-key cutout, desaturated edge spill, lossless 320px WebP",
+  "entries": [
+    {
+      "name": "activity",
+      "source": "C:/Users/nuoya/.codex/generated_images/01a03bbf-2f5e-7253-a9c7-d4c729b752ee/exec-f6150def-6dfb-4d6f-85b4-3bea37c67575.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSha256": "eef998f4676c32cb6b4448700dc38df7dc0386339492178c45a1770f3f6e7491",
+      "sha256": "c942e470c3c31d59ddd2adca953281540a949ca541f75e9c5df41633e4148fdc",
+      "size": 82114,
+      "cleared": 726997
+    },
+    {
+      "name": "media",
+      "source": "C:/Users/nuoya/.codex/generated_images/01a03bbf-2f5e-7253-a9c7-d4c729b752ee/exec-a1cd73ec-b147-4d80-850c-e7c2245ebdc9.png",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceSha256": "327726fb3606d07735450bcb8eb8f17b1da18c7e4189db0972e475e36716005d",
+      "sha256": "830aa04c41fd22ab12da8f7ab9da17387221ee9080b2df5d1dfb5f010a1635e0",
+      "size": 75678,
+      "cleared": 795456
+    }
+  ]
+}

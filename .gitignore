@@ -1,0 +1,57 @@
+# EduAI Prism · 仓库根忽略规则
+# 由来：方案 §0.1——本项目此前**没有版本控制**，而 V0 含一处破坏性数据库迁移（gradient 迁枚举），
+# 没有回滚路径不可执行。此文件必须在首次 commit 之前就位并逐条核对。
+
+# ── 绝不入库：密钥与未成年人数据 ──────────────────────────────
+.env
+.env.*
+!.env.example
+# 本地数据库：含口令哈希 / 学生实名 PII / 危机求助工单 / 审计日志
+.data/
+app/.data/
+uploads/
+
+# ── 工具与会话产物（含可能夹带密钥的日志）──────────────────
+.claude/
+.code-review-graph/
+.codex-supervisor/
+*.log
+
+# ── 构建与依赖 ────────────────────────────────────────────
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+.vercel/
+
+# ── 历史快照与临时产物 ────────────────────────────────────
+_legacy/
+test-results/
+*.zip
+
+# ── 系统 ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.pem
+
+# 测试产物（截图矩阵，体积大且每轮重生成）
+app/tests/artifacts/
+.data-backup/
+.data-demo/
+.data-production/
+
+# Local publication staging and agent runtime records (never publish).
+.publish/
+.agent-supervisor/
+state/
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-wal
+*.sqlite-shm
+
+# Reference-only third-party files, not application source/assets.
+开发材料/QQNCmini-审计资产/
+开发材料/参考资产隔离/

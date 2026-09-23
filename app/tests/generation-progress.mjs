@@ -1,0 +1,30 @@
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import { resolve } from "node:path";
+import ts from "typescript";
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+
+const require = createRequire(import.meta.url);
+const source = readFileSync(resolve("components/common/GenerationProgress.tsx"), "utf8");
+const code = ts.transpileModule(source, { compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS } }).outputText;
+const loadedModule = { exports: {} };
+new Function("require", "module", "exports", code)((name) => name.endsWith(".css") ? new Proxy({}, { get: (_, key) => String(key) }) : require(name), loadedModule, loadedModule.exports);
+const render = (props) => renderToStaticMarkup(React.createElement(loadedModule.exports.GenerationProgress, { label: "生成课件", ...props }));
+
+assert.equal(render({ active: false }), "");
+const unknown = render({});
+assert.match(unknown, /role="progressbar"/);
+assert.doesNotMatch(unknown, /aria-valuenow=/);
+assert.doesNotMatch(unknown, /\d+%/);
+const halfway = render({ completed: 2, total: 4, unit: "页" });
+assert.match(halfway, /aria-valuenow="50"/);
+assert.match(halfway, /2 \/ 4 页/);
+assert.match(render({ completed: 8, total: 4 }), /aria-valuenow="100"/);
+assert.match(render({ completed: -2, total: 4 }), /aria-valuenow="0"/);
+for (const total of [0, -1, NaN, Infinity]) assert.doesNotMatch(render({ completed: 2, total }), /aria-valuenow=/);
+assert.doesNotMatch(render({ total: 4 }), /aria-valuenow=/);
+assert.match(unknown, /aria-hidden="true"/);
+assert.match(readFileSync(resolve("components/common/generation-progress.module.css"), "utf8"), /prefers-reduced-motion/);
+console.log("PASS generation progress semantics: truthful counts, unknown totals, inactive state, motion fallback");

@@ -1,0 +1,2221 @@
+@import "tailwindcss" source(none);
+@source "../app";
+@source "../components";
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+/* Campus 活泼调容器变体（UI 文档 §3.6）：<main data-register="campus"> 内可用 campus:* */
+@custom-variant campus (&:is([data-register="campus"] *));
+@custom-variant console (&:is([data-register="console"] *));
+
+/* EduAI Prism — Design Tokens */
+:root {
+  /* Brand palette */
+  --c-primary: #312E81;
+  --c-primary-2: #4338CA;
+  --c-edu: #2563EB;
+  --c-cyan: #06B6D4;
+  --c-violet: #7C3AED;
+  --c-growth: #10B981;
+  --c-gold: #F59E0B;
+  --c-alert: #EF4444;
+
+  /* Surface */
+  --bg: #F7F8FC;
+  --bg-2: #EEF0F8;
+  --card: #FFFFFF;
+  --text: #111827;
+  --text-2: #6B7280;
+  --text-3: #9CA3AF;
+  --border: #E5E7EB;
+  --border-2: #EEF0F5;
+
+  /* Semantic status colors */
+  --ok: #10B981;
+  --ok-bg: #D1FAE5;
+  --ok-ink: #065F46;
+  --warn: #F59E0B;
+  --warn-bg: #FEF3C7;
+  --warn-ink: #92400E;
+  --err: #EF4444;
+  --err-bg: #FEE2E2;
+  --err-ink: #991B1B;
+  --info: #2563EB;
+  --info-bg: #DBEAFE;
+  --info-ink: #1E40AF;
+  --proc: #7C3AED;
+  --proc-bg: #EDE9FE;
+  --proc-ink: #6D28D9;
+
+  /* Route-register surface system */
+  --rg-card-radius: var(--r-card);
+  --rg-panel-radius: var(--r-card);
+  --rg-control-radius: var(--r-ctl);
+  --rg-shadow: var(--shadow-sm);
+  --rg-panel-shadow: var(--shadow-md);
+  --rg-hover-bg: #F8FAFF;
+  --rg-selected-bg: #EEF2FF;
+  --rg-control-bg: #F1F2F8;
+  --rg-control-hover: #E5E7F0;
+  --code-bg: #0F172A;          /* 代码块底（亮暗皆深底配白字） */
+  --code-inline-bg: #F1F2F8;   /* 行内代码底 */
+  --topbar-bg: rgba(255, 255, 255, 0.72);
+  --rail-bg: rgba(255, 255, 255, 0.42);
+
+  /* 已删除：--m-chatgpt / --m-claude / --m-gemini-* 等 8 个**模型厂牌色**令牌。
+     全部零引用。留着它们有两重害处：
+       ① 色彩门只扫 .tsx?，**不扫 CSS**——厂牌色藏在这里可以永远不被计数，
+          于是「厂牌色已清零」这句话在源码层成立、在令牌层不成立；
+       ② 它们是下一个人「随手复用一下」的现成入口，而模型身份色现已由
+          lib/data/gradientKeys.ts 的 MODEL_PALETTE 统一供给（值取自设计系统色板）。
+     教训：**清理一类东西时，要连同它在扫描盲区里的副本一起清**，
+     否则清的是指标不是问题。 */
+
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg, #312E81 0%, #2563EB 48%, #06B6D4 100%);
+  --grad-side: linear-gradient(180deg, #1E1B4B 0%, #312E81 60%, #3730A3 100%);
+
+  /* Radii */
+  /* V2 §4.3：圆角收敛为**两档 + 胶囊**。原来 sm/md/lg/xl 四档（10/14/20/28）与散落的
+     6/8/9/13/16/18/22/24 混用，实测单页 4-7 档并存——档位越多越看不出层级差别。
+     现在：控件 12px（--r-ctl）/ 卡片 20px（--r-card）；rounded-full 作为胶囊单列，不计档。
+     四个旧名保留为别名，指向两档之一，供存量代码平滑过渡（V2 结束后删）。 */
+  --r-ctl: 12px;
+  --r-card: 20px;
+  --r-sm: var(--r-ctl);
+  --r-md: var(--r-ctl);
+  --r-lg: var(--r-card);
+  --r-xl: var(--r-card);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(17,24,39,0.04), 0 1px 1px rgba(17,24,39,0.03);
+  --shadow-md: 0 4px 14px rgba(31, 41, 80, 0.06), 0 1px 2px rgba(31,41,80,0.04);
+  --shadow-lg: 0 20px 40px -10px rgba(49,46,129,0.18), 0 8px 18px rgba(49,46,129,0.08);
+
+  /* Typography stacks */
+  --font-sans: var(--font-inter), "HarmonyOS Sans SC", "PingFang SC", -apple-system, BlinkMacSystemFont, "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "Fira Code", ui-monospace, monospace;
+  --font-num: var(--font-inter-tight), "DIN Alternate", "Inter", sans-serif;
+
+  /* Campus pastel pops (UI 文档 §3.1B) — 浅底必配 -ink 文字（实测对比度 ≥4.5:1） */
+  --p-sky:   #E0F2FE; --p-sky-ink:   #0369A1;
+  --p-mint:  #DCFCE7; --p-mint-ink:  #047857;
+  --p-lilac: #EDE9FE; --p-lilac-ink: #6D28D9;
+  --p-peach: #FFEDD5; --p-peach-ink: #C2410C;
+  --p-rose:  #FCE7F3; --p-rose-ink:  #BE185D;
+  --p-lemon: #FEF9C3; --p-lemon-ink: #A16207;
+
+  /* Easing / duration tokens (UI 文档 §6.2) */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 120ms; --t-base: 200ms; --t-slow: 360ms; --t-cinematic: 600ms;
+
+  /* shadcn HSL tokens — calibrated to match EduAI Prism */
+  --background: 220 33% 98%;
+  --foreground: 222 47% 11%;
+  --card-bg: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 244 51% 35%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 222 16% 95%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+  /* U-4 修复：此处原名 --accent，与下方 S0 层的 --accent(#4338CA) 在同一 :root 内重复定义，
+     后者覆盖前者，导致任何 hsl(var(--accent)) 消费者拿到 hsl(#4338CA) 这种非法值。
+     已改名 --accent-hsl。实测当前消费者数 = 0（无 hsl(var(--accent))、无 bg-accent 等 shadcn 工具类），
+     故保留值备用而非删除。**新代码一律用 S0 层的 --accent-focus / --accent，不要用本变量。** */
+  --accent-hsl: 191 91% 43%;
+  --accent-hsl-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border-c: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 244 51% 35%;
+  --radius: 0.875rem;
+}
+
+.dark {
+  --bg: #0B0E1A;
+  --bg-2: #11142A;
+  --card: #151935;
+  --text: #F1F5F9;
+  --text-2: #94A3B8;
+  --text-3: #64748B;
+  --border: #1F2547;
+  --border-2: #1A1F40;
+
+  --ok: #34D399;
+  --ok-bg: #063321;
+  --ok-ink: #A7F3D0;
+  --warn: #FBBF24;
+  --warn-bg: #2A1D05;
+  --warn-ink: #FDE68A;
+  --err: #F87171;
+  --err-bg: #2A0E12;
+  --err-ink: #FECACA;
+  --info: #60A5FA;
+  --info-bg: #0B2142;
+  --info-ink: #BFDBFE;
+  --proc: #A78BFA;
+  --proc-bg: #1C1338;
+  --proc-ink: #DDD6FE;
+
+  --rg-hover-bg: #151A35;
+  --rg-selected-bg: #1C2450;
+  --rg-control-bg: #111633;
+  --rg-control-hover: #1A2144;
+  --code-bg: #060A14;
+  --code-inline-bg: #1A1F40;
+  --topbar-bg: rgba(11, 14, 26, 0.76);
+  --rail-bg: rgba(15, 20, 42, 0.56);
+
+  /* Campus pastel —— 暗色降为深底，文字用亮化 ink（UI 文档 §3.1E） */
+  --p-sky:   #0B2233; --p-sky-ink:   #7DD3FC;
+  --p-mint:  #07271C; --p-mint-ink:  #6EE7B7;
+  --p-lilac: #1C1338; --p-lilac-ink: #C4B5FD;
+  --p-peach: #2A1606; --p-peach-ink: #FDBA74;
+  --p-rose:  #2A0E1C; --p-rose-ink:  #F9A8D4;
+  --p-lemon: #241F05; --p-lemon-ink: #FDE047;
+
+  --background: 230 34% 8%;
+  --foreground: 210 40% 96%;
+  --card-bg: 232 36% 14%;
+  --card-foreground: 210 40% 96%;
+  --popover: 232 36% 14%;
+  --popover-foreground: 210 40% 96%;
+  --primary: 234 89% 74%;
+  --primary-foreground: 230 34% 8%;
+  --secondary: 230 25% 18%;
+  --secondary-foreground: 210 40% 96%;
+  --muted: 230 25% 18%;
+  --muted-foreground: 215 20% 65%;
+  --accent-hsl: 191 91% 50%;          /* 见 :root 处 U-4 修复说明 */
+  --accent-hsl-foreground: 230 34% 8%;
+  --border-c: 230 25% 20%;
+  --input: 230 25% 20%;
+  --ring: 234 89% 74%;
+}
+
+[data-register="console"] {
+  --c-primary: #0B79E5;
+  --c-primary-2: #0866C8;
+  --c-edu: #0A84FF;
+  --c-cyan: #12B5CB;
+  --c-violet: #6D5DF6;
+  --grad-primary: linear-gradient(135deg, #0A84FF 0%, #0874D8 55%, #12B5CB 100%);
+  --bg: #F7F9FC;
+  --bg-2: #EEF3F8;
+  --card: #FFFFFF;
+  --border: #DFE7F0;
+  --border-2: #EAF0F6;
+  /* console 作用域此前另开一套 16/18/10——等于把两档变回六档。改为复用同两档。 */
+  --rg-card-radius: var(--r-card);
+  --rg-panel-radius: var(--r-card);
+  --rg-control-radius: var(--r-ctl);
+  --rg-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --rg-panel-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+  --rg-hover-bg: #F4F8FC;
+  --rg-selected-bg: #E7F2FF;
+  --rg-control-bg: #F3F6FA;
+  --rg-control-hover: #E8EEF6;
+  --topbar-bg: rgba(255, 255, 255, 0.86);
+  --rail-bg: rgba(255, 255, 255, 0.58);
+}
+
+[data-register="campus"] {
+  --rg-card-radius: var(--r-card);
+  --rg-panel-radius: var(--r-card);
+  --rg-control-radius: var(--r-ctl);
+  --rg-shadow: var(--shadow-sm);
+  --rg-panel-shadow: var(--shadow-md);
+  --rg-control-bg: #F1F2F8;
+  --rg-hover-bg: #F8FAFF;
+  --rg-selected-bg: #EEF2FF;
+  --rg-control-hover: #E5E7F0;
+}
+
+/* Teacher workspace · Nunito-derived operational register.
+   The reference contributes tonal layering, raised white surfaces, and tactile
+   controls. Scope is explicit so student play surfaces and admin governance keep
+   their own visual contract. */
+html:not(.dark) [data-workspace="teacher"] {
+  --c-primary: #2459C7;
+  --c-primary-2: #1B4599;
+  --c-edu: #2F6FED;
+  --c-cyan: #42BCEB;
+  --c-alert: #C9363E;
+  --c-gold: #9A5B00;
+  --grad-primary: linear-gradient(135deg, #2F6FED 0%, #2864DD 58%, #42BCEB 100%);
+  --bg: #EEF1F8;
+  --bg-2: #E8EDF7;
+  --card: #FFFFFF;
+  --text: #172033;
+  --text-2: #4F5C73;
+  --text-3: #5F6B82;
+  --border: #DDE5F1;
+  --border-2: #E7ECF5;
+  --accent: #2459C7;
+  --accent-focus: #2459C7;
+  --accent-tint: #EDF3FF;
+  --rg-card-radius: 20px;
+  --rg-panel-radius: 20px;
+  --rg-control-radius: 12px;
+  --rg-shadow: 0 1px 2px rgba(31, 48, 82, 0.05), 0 8px 22px rgba(45, 72, 126, 0.055);
+  --rg-panel-shadow: 0 2px 4px rgba(31, 48, 82, 0.05), 0 18px 44px rgba(45, 72, 126, 0.075);
+  --rg-hover-bg: #F5F8FE;
+  --rg-selected-bg: #EAF1FF;
+  --rg-control-bg: #EEF3FB;
+  --rg-control-hover: #E4ECF8;
+  --topbar-bg: rgba(248, 250, 255, 0.9);
+  --rail-bg: #F7F9FE;
+  --teacher-highlight: rgba(255, 255, 255, 0.92);
+}
+
+html[data-density="compact"] [data-workspace="teacher"] {
+  --rg-card-radius: 16px;
+  --rg-panel-radius: 16px;
+}
+
+/* Register scopes sit below `html.dark` in the DOM, so their light surface tokens
+   would otherwise win the cascade. Keep console pages genuinely dark when the
+   user selects the dark theme; this also repairs the same inherited issue on
+   existing admin console routes. */
+.dark [data-register="console"] {
+  --c-primary: #60A5FA;
+  --c-primary-2: #3B82F6;
+  --c-edu: #60A5FA;
+  --c-cyan: #67E8F9;
+  --grad-primary: linear-gradient(135deg, #3B82F6 0%, #2563EB 58%, #0891B2 100%);
+  --bg: #0B0E1A;
+  --bg-2: #11142A;
+  --card: #151935;
+  --text: #F1F5F9;
+  --text-2: #A6B3C7;
+  --text-3: #7F8CA5;
+  --border: #1F2547;
+  --border-2: #1A1F40;
+  --accent: #60A5FA;
+  --accent-focus: #60A5FA;
+  --accent-tint: #1C2450;
+  --rg-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 22px rgba(0, 0, 0, 0.16);
+  --rg-panel-shadow: 0 2px 4px rgba(0, 0, 0, 0.22), 0 18px 44px rgba(0, 0, 0, 0.18);
+  --rg-hover-bg: #151A35;
+  --rg-selected-bg: #1C2450;
+  --rg-control-bg: #111633;
+  --rg-control-hover: #1A2144;
+  --topbar-bg: rgba(11, 14, 26, 0.88);
+  --rail-bg: rgba(15, 20, 42, 0.88);
+  --teacher-highlight: rgba(255, 255, 255, 0.07);
+}
+
+.dark .app-shell[data-register="console"] .app-content-shell {
+  background: var(--bg);
+  background-image: none;
+}
+
+.dark .app-shell[data-register="console"] .app-sidebar {
+  background: var(--rail-bg);
+  border-color: var(--border-2);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.04), 8px 0 28px rgba(0, 0, 0, 0.16);
+}
+
+html:not(.dark) [data-workspace="teacher"] .app-content-shell {
+  background: #EEF1F8;
+}
+
+html:not(.dark) [data-workspace="teacher"] .app-sidebar {
+  background: #F7F9FE;
+  border-color: #DDE5F1;
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.9), 8px 0 28px rgba(45, 72, 126, 0.035);
+}
+
+/* Teacher navigation uses one generated atlas so every route has a distinct,
+   semantically related soft-3D object without issuing thirteen image requests. */
+.teacher-object-icon {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 2px 3px rgba(31, 48, 82, 0.22));
+  transform: translateZ(0);
+  transition: transform 150ms var(--ease-out), filter 150ms var(--ease-out);
+}
+
+.teacher-object-icon-atlas {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+}
+
+.primary-sidebar-icon-slot {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  place-items: center;
+  line-height: 0;
+}
+
+.primary-sidebar-icon-nav {
+  scrollbar-width: none;
+}
+
+.primary-sidebar-icon-nav::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.teacher-object-icon-fallback,
+.teacher-nav-icon-fallback {
+  color: var(--accent-focus);
+}
+
+.teacher-feature-icon {
+  filter: drop-shadow(0 4px 6px rgba(31, 48, 82, 0.2));
+}
+
+.teacher-feature-icon-fallback {
+  color: var(--accent-focus);
+}
+
+.teacher-feature-glyph {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  line-height: 0;
+  transform-origin: center;
+  filter: drop-shadow(0 4px 6px rgba(31, 48, 82, 0.16));
+  transition: transform 160ms ease, filter 160ms ease;
+}
+
+.teacher-feature-glyph-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  background: transparent;
+  user-select: none;
+}
+
+.teacher-feature-glyph-fallback {
+  color: var(--accent-focus);
+}
+
+.teacher-feature-surface:hover .teacher-feature-glyph {
+  transform: translateY(-2px) scale(1.045);
+  filter: drop-shadow(0 7px 9px rgba(31, 48, 82, 0.22));
+}
+
+.teacher-feature-surface:active .teacher-feature-glyph {
+  transform: translateY(1px) scale(0.98);
+}
+
+.teacher-feature-surface:hover .teacher-feature-icon {
+  transform: translateY(-2px) scale(1.045);
+  filter: drop-shadow(0 6px 8px rgba(31, 48, 82, 0.26));
+}
+
+.teacher-feature-surface:active .teacher-feature-icon {
+  transform: translateY(1px) scale(0.98);
+}
+
+.sidebar-link:hover .teacher-nav-icon {
+  transform: translateY(-1px) scale(1.035);
+  box-shadow: none;
+  filter: drop-shadow(0 3px 4px rgba(31, 48, 82, 0.28));
+}
+
+.sidebar-link:active .teacher-nav-icon {
+  transform: translateY(1px) scale(0.98);
+}
+
+.teacher-nav-icon-active {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 2px 3px rgba(11, 31, 78, 0.42));
+}
+
+.teacher-nav-icon-active.teacher-nav-icon-fallback {
+  color: inherit;
+}
+
+.dark .teacher-nav-icon {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.58));
+}
+
+.dark .teacher-nav-icon-active {
+  border-color: transparent;
+  background: transparent;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.64));
+}
+
+.dark .teacher-feature-icon {
+  filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.62));
+}
+
+.dark .teacher-feature-glyph {
+  filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.48));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teacher-object-icon,
+  .teacher-nav-icon,
+  .teacher-feature-glyph,
+  .teacher-feature-surface:hover .teacher-feature-icon,
+  .teacher-feature-surface:active .teacher-feature-icon,
+  .teacher-feature-surface:hover .teacher-feature-glyph,
+  .teacher-feature-surface:active .teacher-feature-glyph,
+  .sidebar-link:hover .teacher-nav-icon,
+  .sidebar-link:active .teacher-nav-icon {
+    transform: none;
+    transition: none;
+  }
+}
+
+html:not(.dark) [data-workspace="teacher"] .app-topbar {
+  border-color: #DDE5F1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 5px 20px rgba(45, 72, 126, 0.04);
+}
+
+html:not(.dark) [data-workspace="teacher"] .surface-card,
+html:not(.dark) [data-workspace="teacher"] .surface-card-lg,
+html:not(.dark) [data-workspace="teacher"] [data-ui="card"] {
+  box-shadow: var(--rg-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+html:not(.dark) [data-workspace="teacher"] [data-variant="primary"],
+html:not(.dark) [data-workspace="teacher"] [data-variant="grad"] {
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  box-shadow: 0 3px 0 #2459C7, 0 9px 20px rgba(47, 111, 237, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out), filter 160ms var(--ease-out);
+}
+
+html:not(.dark) [data-workspace="teacher"] [data-variant="primary"]:hover,
+html:not(.dark) [data-workspace="teacher"] [data-variant="grad"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 #2459C7, 0 12px 24px rgba(47, 111, 237, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+html:not(.dark) [data-workspace="teacher"] [data-variant="primary"]:active,
+html:not(.dark) [data-workspace="teacher"] [data-variant="grad"]:active {
+  transform: translateY(2px) scale(0.99);
+  box-shadow: 0 1px 0 #2459C7, 0 4px 10px rgba(47, 111, 237, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+html:not(.dark) [data-workspace="teacher"] [data-variant="outline"] {
+  box-shadow: 0 2px 0 #D8E1EF, 0 7px 16px rgba(45, 72, 126, 0.06), inset 0 1px 0 #FFFFFF;
+}
+
+html:not(.dark) [data-workspace="teacher"] [data-variant="outline"]:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: 0 1px 0 #D8E1EF, 0 3px 8px rgba(45, 72, 126, 0.05);
+}
+
+[data-workspace="teacher"] .teacher-workspace {
+  color: var(--text);
+}
+
+[data-workspace="teacher"] .teacher-page-header,
+[data-workspace="teacher"] .teacher-page-hero,
+[data-workspace="teacher"] .teacher-command-bar,
+[data-workspace="teacher"] .teacher-toolbar {
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  border: 1px solid var(--border-2);
+  box-shadow: var(--rg-panel-shadow), inset 0 1px 0 var(--teacher-highlight);
+}
+
+[data-workspace="teacher"] .teacher-page-header {
+  min-height: 84px;
+  padding: 18px 20px;
+  border-radius: var(--rg-panel-radius);
+}
+
+[data-workspace="teacher"] .teacher-page-icon {
+  background: var(--grad-primary);
+  box-shadow: 0 4px 0 rgba(36, 89, 199, 0.92), 0 10px 22px rgba(47, 111, 237, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+[data-workspace="teacher"] .teacher-kpi {
+  min-height: 74px;
+  border-color: var(--border);
+}
+
+[data-workspace="teacher"] .teacher-kpi > :first-child {
+  box-shadow: inset 0 1px 0 var(--teacher-highlight), 0 5px 12px rgba(45, 72, 126, 0.08);
+}
+
+[data-workspace="teacher"] .teacher-command-bar {
+  border-radius: var(--rg-panel-radius);
+}
+
+[data-workspace="teacher"] .teacher-toolbar {
+  position: relative;
+  z-index: 2;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+}
+
+[data-workspace="teacher"] .teacher-scope-rail,
+[data-workspace="teacher"] .teacher-detail-rail {
+  background: var(--rail-bg);
+}
+
+[data-workspace="teacher"] .teacher-panel {
+  box-shadow: var(--rg-panel-shadow), inset 0 1px 0 var(--teacher-highlight);
+}
+
+[data-workspace="teacher"] .teacher-entry-card {
+  min-height: 176px;
+}
+
+[data-workspace="teacher"] .teacher-entry-card:hover {
+  border-color: color-mix(in srgb, var(--accent-focus) 28%, var(--border));
+}
+
+[data-workspace="teacher"] .teacher-empty-stage {
+  background: color-mix(in srgb, var(--card) 88%, var(--bg));
+  box-shadow: inset 0 0 0 1px var(--teacher-highlight), var(--rg-shadow);
+}
+
+[data-workspace="teacher"] .teacher-data-table {
+  border-color: var(--border);
+  box-shadow: var(--rg-panel-shadow);
+}
+
+html:not(.dark) [data-workspace="teacher"] .teacher-workspace input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+html:not(.dark) [data-workspace="teacher"] .teacher-workspace textarea,
+html:not(.dark) [data-workspace="teacher"] .teacher-workspace select {
+  box-shadow: inset 0 1px 2px rgba(31, 48, 82, 0.045), 0 1px 0 rgba(255, 255, 255, 0.92);
+  transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+
+html:not(.dark) [data-workspace="teacher"] .teacher-workspace input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+html:not(.dark) [data-workspace="teacher"] .teacher-workspace textarea:focus,
+html:not(.dark) [data-workspace="teacher"] .teacher-workspace select:focus {
+  border-color: var(--accent-focus);
+  box-shadow: 0 0 0 3px var(--accent-tint), inset 0 1px 2px rgba(31, 48, 82, 0.035);
+}
+
+@media (max-width: 767px) {
+  [data-workspace="teacher"] .teacher-page-header {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  [data-workspace="teacher"] .teacher-page-header h1,
+  [data-workspace="teacher"] .teacher-page-hero h1,
+  [data-workspace="teacher"] .teacher-toolbar h1 {
+    font-size: 21px;
+  }
+
+  [data-workspace="teacher"] .teacher-split-workspace {
+    gap: 16px;
+  }
+
+  [data-workspace="teacher"] .teacher-entry-card {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-workspace="teacher"] [data-variant]:hover,
+  [data-workspace="teacher"] [data-variant]:active,
+  [data-workspace="teacher"] .card-lift:hover {
+    transform: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   门户层 · [data-register="portal"]
+   ──────────────────────────────────────────────────────────────────────
+   适用范围：登录前可达的公开页（/portal、/login）。**不影响任何应用页**——
+   应用页的字阶棘轮（≤7 档）与色彩棘轮已经收敛过六批，门户的展示级字号
+   若泄漏进去会一次性撞穿它们，所以整层都锁在这个作用域选择器里。
+
+   数据来源：2026-08-03 用 Playwright 实测 magicschool.ai @1440px 的计算样式。
+   **迁移的是关系，不是色值**：暖底 / 单一强调族 / 展示字阶 / 宽版心。
+   品牌色仍用我们自己的双基调（教师靛蓝 --c-primary-2 / 学生钴蓝 --c-edu），
+   不采纳其紫——那是他们的品牌资产，且我们的双色承担角色识别，是功能不是装饰。
+
+   最值得抄的一条：**它的「白」不是白。** 实测最高频色是 #FFFEF0（偏黄奶油白，
+   文字 ×39 / 背景 ×9），纯白只出现在卡片面上。整站「暖而不刺眼」全从这来，
+   成本极低。下面 --bg 取同族但略收黄度，以配我们偏冷的靛蓝强调色。
+   ══════════════════════════════════════════════════════════════════════ */
+[data-register="portal"] {
+  /* 面层：暖奶油底 + 纯白卡片（与实测做法一致） */
+  --bg: #FFFDF6;
+  /* 分带明度差（本轮）：原值 #FFF8E8 与 --bg 的 CIE L* 为 97.72 / 99.29，
+     ΔL* 仅 1.56——远低于可感知门槛 6，等于「换了底色但看不出换过」，
+     全页节奏实际只靠留白撑着（而留白档位本身还在漂移）。
+     压到 #F5EBD2 后 L*=93.23、ΔL*=6.06 刚过门槛，且仍在暖奶油族内没有变色相。
+     ⚠️ 这一改**必须与下面的 --text-3 同批**：旧 text-3(#8A8880) 压在新带上只有
+     2.99:1，跌破 3.0。分带与文字色是一对耦合值，单改一个就制造一处可访问性缺口。 */
+  --bg-2: #F5EBD2;
+  --card: #FFFFFF;
+  --border: #EDE7D6;          /* 边框跟着底色走暖，冷灰边在暖底上会发脏 */
+  --border-2: #F5EFE0;
+
+  /* 文字：暖底上的中性色要比冷底上略深，否则看着发灰（实测其正文用 #212121） */
+  --text: #1B1B1B;
+  --text-2: #5C5A54;
+  /* 从 #8A8880 加深到 #78766D（与上面的 --bg-2 同批，理由见那里）。
+     实测三种底上的对比度：新带 3.84 / 页面底 4.47 / 卡片白 4.55，
+     三处都从「勉强过 3」提到「稳过 3、逼近 4.5」。 */
+  --text-3: #78766D;
+
+  /* 深色区块（英雄区 / 页脚）：深底 + 奶油字，是其对比手法的核心 */
+  --portal-ink: #1E1B4B;      /* 复用品牌深靛，非其深紫 */
+  --portal-ink-2: #312E81;
+  --portal-on-ink: #FFFDF6;   /* 深底上的字用奶油白而非纯白——刺眼度差别很大 */
+
+  /* 展示字阶（三档，仅门户可用）。实测其标题带为 20/24/28/32/40/56，
+     我们只取最有辨识度的三档，不把 12 档全搬过来——那是营销站的密度，
+     校内门户不需要，多一档就多一次「这两个到底哪个更重要」的犹豫。 */
+  --fs-d1: 56px;
+  --fs-d2: 40px;
+  --fs-d3: 28px;
+  --lh-d: 1.15;
+
+  /* 版心：实测其 1440 视口下内容宽收敛在 1280 / 1216 */
+  --portal-max: 1280px;
+  --portal-pad: 40px;
+
+  /* 强调：沿用 S0 层双基调，此处只做门户专用的浅底/描边派生 */
+  --portal-accent: var(--c-primary-2);
+  --portal-accent-2: var(--c-edu);
+  --portal-tint: color-mix(in srgb, var(--c-primary-2) 8%, #FFFDF6);
+  --portal-tint-2: color-mix(in srgb, var(--c-edu) 8%, #FFFDF6);
+
+  /* ── 登录页面层（/login 也挂 data-register="portal"）────────────────────
+     与 /portal 共享暖底，让「门户 → 进入平台 → 登录」不会在中途换一次色温。
+
+     ⚠️ 新拟态的阴影**必须跟着底色走暖**。原实现用 rgba(166,175,195,·)，那是
+     为冷灰底调的；压在奶油底上会发脏，看着像蒙了一层灰。新拟态的整个说服力
+     就在于「卡片是从这块面料上压出来的」——阴影一旦不是底色的暗部，
+     压印感立刻垮成「一张灰卡片浮在黄纸上」。 */
+  --login-panel-1: #FFFDF6;
+  --login-panel-2: #FAF3E2;
+  --login-panel-3: #FFFCF0;
+  --login-field: #F6F0E1;
+  --login-neu-dark: rgba(191, 176, 141, 0.40);
+  --login-neu-light: rgba(255, 255, 255, 0.96);
+  --login-blob-1: #E6E9FF;
+  --login-blob-2: #DDF2EA;
+  /* ── 登录前主动作（唯一一组）──────────────────────────────────────────
+     曾经这里是 `--login-cta: #14B8A6`（青绿），与门户的钴蓝并存。实测推翻了它：
+
+       · 青绿 #14B8A6 上的白字 = **2.49:1**，远低于 AA 的 4.5:1。
+         那是「登录」按钮——**全产品最重要的一个控件**，却是全站对比度最差的一处。
+       · 钴蓝 #2563EB 上的奶油白字 = **5.08:1**，过 AA。
+       · 而且 #14B8A6 在色板里根本不存在，是一处孤值；钴蓝在本项目同时是
+         `--c-edu` 与 `--info`，**本就是系统的通用主色**，不是学生角色专属，
+         因此不存在「登录前就给人预设身份」的顾虑（角色色只留在 RoleEntries 的
+         身份 tab 上，那里表达归属才是对的）。
+
+     反相规则：深色区块（英雄区 / 页脚 CTA）上不用钴蓝实心。实测钴蓝压在
+     --portal-ink-2 上只有 **2.21:1**，低于 WCAG 1.4.11 对非文字控件的 3:1。
+     深底上改用奶油白实心 + 深靛字，控件与文字双双拉到 15:1 以上。
+     **同一个动作、同一个色族、两种明度形态**——不是两种颜色。 */
+  --portal-cta: var(--c-edu);          /* 浅底：实心钴蓝 */
+  --portal-cta-ink: #FFFDF6;           /* 钴蓝上的字 */
+  --portal-cta-inv: #FFFDF6;           /* 深底：实心奶油白 */
+  --portal-cta-inv-ink: #1E1B4B;       /* 奶油白上的字 */
+}
+
+@media (max-width: 900px) {
+  [data-register="portal"] {
+    /* 这三个值曾是 36 / 28 / 22。36 与 22 都**不在门户七档字阶内**，
+       而字阶棘轮门固定跑 1440x900，永远看不见 <=900 的媒体查询——门是绿的，
+       档位却在小屏上悄悄多出两个。改成档内值后 <=900 的集合收敛为七档的真子集。
+       前置条件：--fs-d3 的两个使用者里，页脚结尾 CTA 的 h2 已先解绑改用 d2，
+       否则 d3 降档会把移动端那条主行动标题压到与正文同级。 */
+    --fs-d1: 40px;
+    --fs-d2: 28px;
+    --fs-d3: 18px;
+    --portal-pad: 20px;
+    /* 纵向节奏在 ≤900 整体压到 0.6–0.7 倍，与字阶断档同比 */
+    --sec-y-sm: 40px;
+    --sec-y-md: 56px;
+    --sec-y-lg: 80px;
+    --sec-y-xl: 112px;
+  }
+}
+
+/* ── 门户版式令牌（本轮新增）─────────────────────────────────────────────
+   为什么要令牌化：实测门户六个区块的纵向内距渲染出 7 档碎值
+   （70/98/56/84/112/49/42px），全部不在 8px 基线上——因为写的是 py-16/20/24/28
+   这类 rem 档位，而根字号是 14px，rem 标度整体 ×0.875 后没有一个落整数。
+   Capabilities 的注释已自承「代码漂移了」，靠人工对照维持。新增区块只会让漂移更快，
+   所以先把节奏收进四档令牌，再让门接管（gate 断言 padding 取值必须落在集合内）。
+
+   阅读宽同理：六个文件里手写过 52ch/56ch/62ch/20ch/720px/640px/420px/520px/42rem
+   等 ≥9 种值。中文按 30–38 字/行折算成三档。 */
+[data-register="portal"] {
+  --sec-y-sm: 56px;
+  --sec-y-md: 80px;
+  --sec-y-lg: 112px;
+  --sec-y-xl: 160px;
+
+  --measure-sm: 480px;
+  --measure-md: 640px;
+  --measure-lg: 760px;
+
+  /* 标题与段落之间的固定间距，替换 mt-3/4/5/6/8 的碎值 */
+  --gap-after-eyebrow: 12px;
+  --gap-after-d2: 24px;
+  --gap-para: 16px;
+}
+
+/* ── FAQ 折叠动效（rank 4 配套）────────────────────────────────────────────
+   height: 0 → auto 过去不可过渡，只能猜 max-height 魔数：猜大了有空转尾巴、
+   猜小了内容被截断，而且不同长度的面板速度感还不一致。
+   现在用 details::details-content + interpolate-size 让 auto 可插值；
+   用 @supports 门控——不支持的浏览器仍然正常开合，只是没有滑动过渡。
+   降级方向必须是「少一个动效」，不能是「内容出不来」。 */
+@supports (interpolate-size: allow-keywords) {
+  [data-register="portal"] {
+    interpolate-size: allow-keywords;
+  }
+
+  [data-register="portal"] .portal-faq::details-content {
+    height: 0;
+    overflow: clip;
+    transition:
+      height var(--t-base) var(--ease-out),
+      content-visibility var(--t-base) allow-discrete;
+  }
+
+  [data-register="portal"] .portal-faq[open]::details-content {
+    height: auto;
+  }
+}
+
+[data-register="portal"] .portal-faq[open] .portal-faq-caret {
+  transform: rotate(180deg);
+}
+
+/* ── hover 指针门控（rank 9）───────────────────────────────────────────────
+   实测：改动前全站 `@media (hover: hover)` 规则数为 0。触屏点一下卡片后，
+   :hover 态会**粘住不消失**（浏览器保留最后一次触摸的 hover），于是移动端
+   会出现一张永远浮起来的卡——这是行业普遍缺陷，改掉就是差异化。
+   写成复位而不是给每个工具类加前缀：门户组件里的 hover: 类有几十处，
+   逐个改前缀既啰嗦又容易漏；在无层规则里对没有精确指针的设备统一压平，
+   一条规则覆盖全部。⚠️ 必须写 !important：这些 hover 效果来自
+   @layer utilities，而无层规则虽然在层级比较上胜出，但同属「作者样式」时
+   仍要看优先级——实测中 hover:-translate-y-0.5 的 transform 需要 !important
+   才压得住（与门户焦点环那次同一类级联层陷阱）。 */
+@media (hover: none) {
+  [data-register="portal"] *:hover,
+  [data-portal-root] *:hover {
+    /* V16.1 补：登录页（data-portal-root）加入位移类 hover 后同样纳入触屏压平门控 */
+    transform: none !important;
+  }
+}
+
+/* ── 门户焦点环（刻意写成无层规则）──────────────────────────────────────────
+   本文件上方有一条**无层**的 `*:focus-visible`。级联层的比较先于特异度，
+   所以那条规则赢过 `@layer utilities` 里的全部 `focus-visible:outline-*` 工具类——
+   门户里 11 处焦点声明（9 处颜色 + 3 处 offset-4 + 2 处 outline-none）**从未渲染过**，
+   深底上本该是奶油白的焦点环实测一律是钴蓝，对比度从 15.9:1 掉到 3.1:1，
+   离 WCAG 1.4.11 的 3:1 只剩 1.5% 余量；角色 tab 上 outline-none 也被通吃，
+   于是 outline 与 ring **同时画出两圈**。
+
+   这与本文件 389-406 行注释里已经处理过的 `* { border-color }` 和 `a { color:inherit }`
+   是同一个坑的第三条，那两条的处方是「搬进 @layer base」。这里**不搬**：
+   那条规则是全站的，搬层会让所有登录后页面里同样从未生效过的 focus 工具类
+   一次性开始生效，而那些颜色没有被任何门验证过——**修一个缺陷时不要顺手改一片**。
+   代价是本规则同样赢过写在组件上的 focus 工具类：**要改门户焦点环改这里，
+   在组件上写 focus-visible:outline-* 不会生效**（那 11 处已随本次改动删掉）。
+
+   用 `outline` 简写而不是 `outline-color`：简写直接写死 outline-style，
+   不经过 Tailwind 的 --tw-outline-style，因此免疫 `outline-none`。 */
+[data-portal-root]                   { --portal-focus: var(--portal-accent); }
+[data-portal-root] [data-ink="dark"] { --portal-focus: var(--portal-on-ink); }
+[data-portal-root] [data-ink="warn"] { --portal-focus: var(--warn-ink); }
+[data-portal-root] :focus-visible {
+  outline: 2px solid var(--portal-focus);
+  outline-offset: 2px;
+}
+
+/* ── 门户滚动入场（R3：实测全页滚动零动画，补上大厂标配的克制版）──────────────
+   纯 CSS scroll-driven animation：零 JS；不支持 animation-timeline 的浏览器
+   （Safari/Firefox 旧版）静默退化为无动效；reduced-motion 用户完全关闭。
+   只动 opacity/transform（不进布局管线，CLS 保持 0——R1 实测基线）。
+   **TrustSafety 区块刻意一个都不挂**：安全求助/危机提示按铁律⑤从严处理，
+   不接受任何形式的延迟可见，哪怕只是入场淡入。
+   起点 opacity 用 0.001 不用 0：部分测量工具把 opacity:0 判为「不可见元素」
+   而跳过测量，0.001 在视觉上等同于 0 但保住了可测性。 */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-register="portal"] .portal-reveal {
+      animation: portal-reveal-up linear both;
+      animation-timeline: view();
+      /* 斜坡加 140px 绝对上限（R5 对抗复核 R3-MOBILE-FREEZE）：纯百分比的斜坡长度
+         随元素自身高度缩放，375px 单列布局把大卡撑到 469-578px 高，斜坡膨胀到
+         258-318px——scroll-linked 没有时间维度，惯性急停后这些块冻结在可感知的
+         半透明态（实测 op 0.632 跨 3s 逐位不变）。min() 封顶后移动端冻结停留位
+         2.5%→0.0%，桌面短卡逐位不变。
+         ⚠️ portal-reveal 不得挂进 overflow-hidden/auto/scroll 祖先——那会产生
+         滚动容器并劫持 view() 时间轴（进度锁死在 1，动画静默失效）。裁切用
+         overflow-clip。 */
+      animation-range: entry 0% entry min(55%, 140px);
+    }
+    /* 键盘焦点落点豁免（R5 对抗复核 AT-2）：390px 档 Tab 停靠可能落进入场半程的
+       容器（实测冻在 0.891 不再自行恢复）。焦点所在的 reveal 立即满不透明——
+       与 print / reduced-motion 豁免同构，一行 CSS 零 JS。 */
+    [data-register="portal"] .portal-reveal:focus-within {
+      animation: none;
+    }
+  }
+}
+/* 位移 14 → 20px（本轮）：动效预算从 15 处收敛到 4 处（只留区块标题带）之后，
+   单个进场需要更清晰的方向感——密度降下来了，幅度才有空间。20px 落在研究给的
+   16–32px 区间内；140px 绝对封顶与 :focus-within 豁免不变。
+   顺带记一条**被实测推翻的风险**：规格担心 `animation: … linear both` 这个简写会
+   把 animation-duration 塌成 0s（导致关键帧跳到末帧、变成「弹出」而非渐进）。
+   实测 computed animation-duration === "auto"，风险不成立，不需要显式补写。 */
+@keyframes portal-reveal-up {
+  from { opacity: 0.001; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* tab 面板切换淡入（R4：原由 motion 库承担——/portal 路由图里唯一的 motion 使用者
+   只做这一个 0.2s 动画，换成 CSS 后路由 JS 实测 560→491KB）。曲线时长照抄原 motion 值。
+   只在 motion-safe 下动；类名只在用户切换过之后才挂（首帧语义见 RoleEntries 注释）。 */
+@media (prefers-reduced-motion: no-preference) {
+  [data-register="portal"] .portal-panel-in {
+    animation: portal-panel-in 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+@keyframes portal-panel-in {
+  from { opacity: 0.001; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* 打印：滚动驱动的入场在打印上下文里没有滚动，折下内容会以入场起点态
+   （近乎透明）进纸——实测 print 媒体下 13/14 个 reveal 元素半透明。
+   学校场景里打印这页很真实（例如家长会材料），必须整组关闭。 */
+@media print {
+  [data-register="portal"] .portal-reveal,
+  [data-register="portal"] .portal-panel-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* 折叠区在打印时必须全部展开——否则教师把这页打给家长会或信息中心时会缺一半
+     内容（正是那些「他们一定会问」的答案）。details 的折叠由 content-visibility
+     控制，单靠 [open] 属性改不动已渲染的收起态，所以两条一起写：
+     ::details-content 强制可见 + 高度放开。 */
+  [data-register="portal"] .portal-faq::details-content {
+    content-visibility: visible !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* 打印时不需要的交互装饰：吸顶导航（打印出来是一条压在正文上的横条）、
+     箭头指示符、二次转化按钮本身。 */
+  [data-register="portal"] header[class*="sticky"],
+  [data-register="portal"] .portal-faq-caret {
+    display: none !important;
+  }
+}
+
+/* 锚点跳转：导航是 sticky 的，不留出偏移量的话，点「安全与隐私」会把该区块的
+   标题正好顶到导航底下——跳转看起来「生效了但跳错位置」，比不跳更让人困惑。
+   scroll-margin-top 是给锚点目标自己加的上边距，只在滚动定位时参与计算。 */
+[data-register="portal"] section[id] {
+  scroll-margin-top: 88px;
+}
+
+/* 卡片级锚点（#safety-crisis / -data / -scope / -guardian）。**必须单列一条**：
+   上面那条选择器限定 section[id]，而这四个锚点挂在 <li> 上，选择器吃不到它们——
+   页脚的四条安全链接会跳到被吸顶导航盖住的位置，且不报错、只在实测落点时才看得出来
+   （与门户此前那次「资产存在不等于资产生效」是同一类静默失效）。 */
+[data-register="portal"] [id^="safety-"] {
+  scroll-margin-top: 88px;
+}
+
+/* 平滑滚动只在用户没要求减少动效时开启 */
+@media (prefers-reduced-motion: no-preference) {
+  [data-register="portal"] {
+    scroll-behavior: smooth;
+  }
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-card: var(--card);
+  --color-card-foreground: var(--text);
+  --color-border: var(--border);
+  --color-input: var(--border);
+
+  --color-primary: var(--c-primary);
+  --color-primary-2: var(--c-primary-2);
+  --color-edu: var(--c-edu);
+  --color-cyan: var(--c-cyan);
+  --color-violet: var(--c-violet);
+  --color-growth: var(--c-growth);
+  --color-gold: var(--c-gold);
+  --color-alert: var(--c-alert);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+
+  /* 已删除 8 条 --color-m-* 映射：它们指向的 --m-* 厂牌色令牌已在上方删除，
+     留着就是**悬空引用**——`var(--m-claude)` 解析不出值，`bg-m-claude` 这类工具类
+     会静默失效。八个工具类实测零使用，与令牌本身一同清除。
+     顺带一条教训：**删令牌时要连同它的 @theme 映射一起删**，
+     否则删的是定义、留下的是一个指向空处的公开接口。 */
+
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-xl);
+
+  --shadow-soft-sm: var(--shadow-sm);
+  --shadow-soft-md: var(--shadow-md);
+  --shadow-soft-lg: var(--shadow-lg);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-num: var(--font-num);
+}
+
+/* ⚠️ 这一整块必须留在 @layer base 里。
+ *
+ * 它原本是**无层**的。CSS 级联层的比较**先于特异度**，无层规则排在所有 @layer
+ * 之后，也就是赢过 Tailwind 的 @layer utilities。后果是两类工具类全站静默失效：
+ *
+ *   · `border-<color>` —— 被下面 `* { border-color: var(--border) }` 通吃。
+ *     类名照常生成、照常挂到元素上，只是颜色不是你写的那个。**不报错、不掉类。**
+ *   · `<a>` 上的 `text-<color>` —— 被 `a { color: inherit }` 通吃，同理。
+ *
+ * 这是构建门户页时由可访问性审查实测抓出来的：页脚 `border-[var(--portal-on-ink)]/15`
+ * 本该是 15% 的奶油白发丝线，实际渲染成满不透明的暖灰压在深靛底上，对比度 12:1，
+ * 一条刺眼白实线。同一轮里有个组件作者发现了这坑并在本地绕开（改用 ring / inline
+ * style），另一个作者没绕——**说明「靠每个人记得绕开」不是可行的工程方案**，
+ * 那只是把一个系统缺陷摊派给了所有未来的人。
+ *
+ * 装进 @layer base 后：没写颜色工具类的元素照旧拿到 --border / inherit（重置行为不变），
+ * 写了的则拿到自己写的值。**这不改变任何人的意图，只是让意图开始生效。**
+ */
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-color: var(--border);
+  }
+
+  /* ── 命中区阶梯（绝对像素，不随根字号或 fontScale 缩放）──────────────
+     四档全部取自仓库现有取值的频次统计（40×48 / 44×30 / 48×14 / 52×12 处），
+     不新造标度——Carbon 的密度阶梯也是固定几档而非连续值。
+     · --hit-inline 40px：行内次级控件（chip / 小图标按钮），WCAG 2.5.8 的 24px
+       是 AA 地板，这里留足余量但不占版面；
+     · --hit-min   44px：Apple HIG 与 WCAG 2.5.5(AAA) 的下限，普通按钮用它；
+     · --hit-row   48px：Material 的列表行下限，导航项/下拉项/表格行动作用它；
+     · --hit-lg    52px：侧栏主导航项，本项目既有取值，保留。
+     rem 一律不用：min-h-12 在 fontScale 0.85 档只有 35.7px。 */
+  :root {
+    --hit-inline: 40px;
+    --hit-min: 44px;
+    --hit-row: 48px;
+    --hit-lg: 52px;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    /* ⚠️ 根字号 14px（非浏览器默认 16px）会把 Tailwind 全部 rem 标度按 0.875 缩放：
+       text-xs = 10.5px（不是 12）、h-10 = 35px（不是 40）、p-4 = 14px（不是 16）。
+       这是**全站生效**的既成事实，改动它等于给整个应用重新排版，不在门户这一轮的
+       射程内。门户层的对策是：涉及可读性下限与触达面积的地方一律用绝对像素
+       （text-[12px] / h-[44px]），不用 rem 档位。
+
+       ⚠️⚠️ 还有第二层，比 0.875 更隐蔽：**用户可调字号**。
+       Providers.tsx 用内联样式写 root.style.fontSize = 14 * fontScale，
+       而 profile 页的滑杆是 0.85–1.3 —— 根字号真实区间是 11.9px–18.2px。
+       于是 min-h-12（3rem）在最小档只有 **35.7px**，不但低于 Apple 44 / Material 48，
+       而且任何在 fontScale=1 下写的命中区断言都测不到最坏情况，是结构性的假绿。
+       命中区一律走下面这组令牌，令牌值全是绝对像素，不随 fontScale 缩水。 */
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea, select { font-family: inherit; color: inherit; }
+  a { color: inherit; text-decoration: none; }
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D7DAE5; border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: #B8BCD0; background-clip: padding-box; border: 2px solid transparent; }
+.dark ::-webkit-scrollbar-thumb { background: #2A3055; }
+
+/* Utility helpers used in legacy CSS — translated to Tailwind-friendly classes */
+.bg-grad-primary { background-image: var(--grad-primary); }
+.bg-grad-side { background-image: var(--grad-side); }
+
+.text-num { font-family: var(--font-num); font-feature-settings: "tnum"; }
+
+.app-shell {
+  transition: background-color var(--t-base) var(--ease-out);
+}
+
+.app-shell[data-register="console"] .app-content-shell {
+  background-image:
+    radial-gradient(circle at 52% 0%, rgba(10, 132, 255, 0.045), transparent 32%),
+    linear-gradient(180deg, rgba(247, 249, 252, 0.9), var(--bg));
+}
+
+.app-shell[data-register="campus"] .app-content-shell {
+  background-image:
+    radial-gradient(circle at 70% 10%, rgba(6, 182, 212, 0.08), transparent 34%),
+    radial-gradient(circle at 42% 0%, rgba(124, 58, 237, 0.045), transparent 28%);
+}
+
+/* Subtle blink for streaming dots */
+@keyframes blink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+.animate-blink { animation: blink 1.2s ease-in-out infinite; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-float { animation: float 4s ease-in-out infinite; }
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.96); opacity: 0.7; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+.animate-pulse-ring { animation: pulse-ring 2.4s ease-out infinite; }
+
+@keyframes drift {
+  0% { transform: translate3d(0,0,0); opacity: 0.0; }
+  20% { opacity: 0.5; }
+  100% { transform: translate3d(var(--dx,40px), var(--dy,-80px), 0); opacity: 0; }
+}
+.animate-drift { animation: drift var(--dur, 9s) linear infinite; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* 分场景入场（Reveal）：纯 CSS keyframes——不依赖 JS/rAF/IntersectionObserver，
+   后台标签页/嵌套滚动容器下也绝不会把内容卡在不可见态；reduced-motion 由上方 0.01ms 守卫瞬时完成。 */
+@keyframes edu-reveal {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.reveal-in {
+  animation: edu-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--reveal-delay, 0s);
+}
+
+/* 已删除：`.recharts-default-tooltip { border-radius: … !important }`。
+   加它时的归因是「第三方图表库默认 10px」——**归因错了**：10px 是我们自己在
+   6 处 contentStyle 里手写的；而且这条规则在运行时根本没进样式表（浏览器里
+   查不到该 selector），既没生效也没被发现没生效。真正的修法在
+   lib/data/chartStyle.ts：6 处 3 种写法收敛为一处 CHART_TOOLTIP_STYLE。 */
+
+/* 微反馈：跨天复习后的一次性提示（L1）。
+   刻意做成**小、短、原地**——方案 §3.3 把「全屏庆祝」列为 L4 全站禁用红线，
+   而 L4 与 L1 的差别不在触发条件，在**占多大地方、留多久**。
+   尊重 prefers-reduced-motion：降级为直接显示，不做位移与缩放。 */
+.celebrate-pop {
+  animation: celebrate-pop var(--t-slow) var(--ease-out) both;
+}
+@keyframes celebrate-pop {
+  from { opacity: 0; transform: translateY(4px) scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .celebrate-pop { animation: none; }
+}
+
+/* ===== S0 地基：角色双基调令牌 + 动效 utility（角色化重构方案 §3） ===== */
+:root {
+  /* 双基调（land-book 实证：中性底+单一强调色）。默认=教师冷调；student 作用域覆写为暖调 */
+  --surface-1: #F7F8FC;            /* 分区交替底色 A（近邻，L* 差 2-4） */
+  --surface-2: #EFF1F8;            /* 分区交替底色 B */
+  --accent: #4338CA;               /* 教师端唯一强调色：靛蓝 */
+  --accent-ink: #FFFFFF;
+  /* V2 令牌迁移：--accent-focus 是**唯一主行动色**的正式名字，--accent 进入 deprecated 期。
+     新代码一律写 --accent-focus / --accent-tint；旧名保留到 V2 结束后删除（方案 §4.2 映射表）。
+     --accent-tint 承担「归属感」的大面积浅底，取代此前各处自造的 8-12% 透明色。 */
+  --accent-focus: var(--accent);
+  --accent-tint: color-mix(in srgb, var(--accent) 10%, transparent);
+  --section-gap: clamp(3rem, 6vw, 5.5rem);
+  --lift-y: -3px;
+  --lift-shadow: var(--shadow-md);
+  --motion-scale: 1;               /* 低动效模式写 0（profile 偏好/reduced-motion 同源） */
+
+  /* ===== z 阶梯（七层全登记）=====
+     由来：全库 z 值曾散布 40/60/85/90/100/110/120/130/200，契约只写在 GuardianShell 的一行注释里，
+     被后续改动稀释而无人报警（缺陷台账 U-1，定级 P2）。此处把阶梯变成可查的闭集。
+
+     两条规则，缺一不可：
+     ① 除已登记的跳过链接（--z-skip-link，无障碍必需、仅 focus 态出现）外，
+        任何非安全层不得 ≥ --z-safety-fab。
+     ② **比数值更根本**：安全层（SafetyHelp）的任何祖先不得引入层叠上下文
+        （transform / filter / backdrop-filter / opacity<1 / will-change / contain）——
+        否则数值再高也会被关在父上下文里。曾有一次 P1 误报正源于只比数值、忽略层叠上下文：
+        ChatTopbar 根节点 `relative z-40 + backdrop-blur-md` 使其内部 z-130/z-120 根本出不去。
+        因此层级类断言必须用 elementFromPoint 验证，不能只读 z 值。 */
+  --z-app: 40;              /* 页面内常规浮层（如 chat 顶栏） */
+  --z-tabbar: 45;           /* H14 学生底部胶囊导航（窄屏）。刻意低于 --z-app-modal(90)
+                               与 --z-guardian-night(94)：弹层与夜间遮罩必须盖住它，
+                               否则宵禁期学生还能从底栏跳走 */
+  --z-app-popover: 50;      /* 页面内瞬态弹出层（消息 ⋯ 菜单等）。面板用 fixed 逃出消息
+                               滚动容器的裁切（移动端容器装不下整张菜单，absolute 必被底边
+                               裁掉——对抗测量实抓），本档保证它压过 composer/吸顶行（40），
+                               仍低于 guardian/safety 各层。 */
+  --z-guardian-badge: 60;   /* GuardianShell 时长徽章 */
+  --z-app-modal: 90;        /* 应用级弹层：复制兜底 / 新手引导 / 命令面板 */
+  --z-guardian-rest: 92;    /* 休息提醒（与 app-modal 分开取值，消除撞层） */
+  --z-guardian-night: 94;   /* 夜间不透明全屏遮罩 —— 必须 < --z-safety-fab，否则夜间无法求助 */
+
+  /* 宵禁遮罩底色。**刻意放在主题块之外**：它不是一个主题化表面——
+     夜间休息屏在浅色主题下也必须是深色，跟着主题翻转成浅色就失去了「该睡觉了」这层含义。
+     这里给一个字面量命名，与「把散落 hex 搬进 CSS 让计数假降」是两回事：
+     前者是一个语义值获得名字，后者是一批值换个地方躲开扫描。 */
+  --night-overlay: #0F172A;
+  --z-toast: 95;            /* 瞬时状态提示 */
+  --z-safety-fab: 100;      /* 安全求助浮标 */
+  --z-skip-link: 105;       /* 唯一被允许 ≥100 的非安全层，且必须 < --z-safety-dialog */
+  --z-safety-dialog: 110;   /* 危机求助对话框 —— 全站最高 */
+}
+[data-persona="student"] {
+  --surface-1: #FBF8F3;            /* 学生端：暖奶油近白（Apple Style 基调） */
+  --surface-2: #F5F0E6;
+  --accent: #2563EB;               /* 学生端唯一强调色：钴蓝 */
+  --accent-focus: var(--accent);   /* 作用域内跟随学生端强调色 */
+  --accent-tint: color-mix(in srgb, var(--accent) 10%, transparent);
+  --lift-y: -4px;                  /* 学生端 lift 略大一点，体现「轻快」 */
+}
+
+/* M1 入场 stagger 波次：父级挂 .stagger，子项内联 --i（0..n），60ms 递增，一屏一波 */
+.stagger > * {
+  animation: edu-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+/* M5 卡片 lift 收口：transform/shadow-only，150-200ms（各组件散装 hover 逐步收敛到此类） */
+.card-lift {
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+}
+.card-lift:hover { transform: translateY(var(--lift-y)); box-shadow: var(--lift-shadow); }
+
+/* M7 路由入场帧：app/(shell)/template.tsx 每次导航重新挂载自动重播（零 JS、无 rAF 依赖） */
+.page-enter { animation: edu-reveal 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* M2 Hero ambient 浮动：8-14s 慢呼吸（transform-only，reduced-motion 由全局守卫静止） */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.float-soft { animation: float-soft 11s ease-in-out infinite; }
+.float-soft-2 { animation: float-soft 14s ease-in-out -4s infinite; }
+
+/* M4 滚动 reveal：仅 Chromium 渐进增强——默认态完整可见，不支持的浏览器零差异 */
+@supports (animation-timeline: view()) {
+  .scroll-reveal {
+    animation: edu-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+}
+
+/* Accessibility — respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.reduce-motion *, .reduce-motion *::before, .reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* ── 界面密度 ────────────────────────────────────────────────────────────────
+   「紧凑」此前**几乎什么也没干**。实测（/dashboard，12 张卡）切换前后：
+     文档高度 2231px → 2231px（0 变化）
+     卡片内边距 14px → 14px
+     卡片高度   151px → 151px
+   唯一变化是圆角 20→16px。也就是说一个标着「界面密度」的开关，改的是圆角。
+
+   两条失效原因：
+   1. `body { font-size: 13px }` 落在 **body** 上，而 rem 解析的是**根元素 html**，
+      所以它对 Tailwind 的全部 rem 标度毫无影响；而本项目处处写 text-[13px]
+      这类绝对值，继承字号本就没几个读者。这行已删——它没做对事，
+      留着只会让下一个人以为密度已经接好了。
+   2. `.surface-card` 用了 60 处却**自身不带 padding**，内边距来自各调用点的
+      Tailwind 类。所以 CSS 从卡片这一侧压不动布局。
+
+   真正的杠杆是 Tailwind v4 的 `--spacing` 基数：padding、gap、margin、space 这几族
+   工具类全部编译成 `calc(var(--spacing) * n)`，改它一处即可整体收紧。
+   （注意别在 CSS 注释里写通配写法「p-星斜杠」——那个 `*` 加 `/` 会提前闭合块注释，
+   本文件已因此整份解析失败过一次，而 Turbopack 只是静默继续发上一份可用 CSS，
+   表现为「改了没反应」，极易被误诊成缓存陈旧。）
+   取 0.2143rem（14px 根字号下
+   恰好 3px，相对 3.5px 收 14.3%），实测卡片内边距 14→12px、文档高度 2231→1744
+   （省 487px / 21.8%）——这才是「密度」这个词承诺的东西。
+
+   ⚠️ 为什么这么改是安全的：命中区已在 V6 全部迁到绝对像素令牌
+   （--hit-inline/min/row/lg）与 h-[48px] 一类字面值，不再依赖 --spacing。
+   实测同一页 44px 以下控件数在两档下均为 12（无变化），侧栏项仍 52px。
+   若将来有人把命中区写回 min-h-12，这条密度档就会连带把它压到 36px ——
+   G12 的「可点元素不用 rem 档位」正是这道防线，两者必须一起在。 */
+html[data-density="compact"] {
+  --spacing: 0.2143rem;
+}
+html[data-density="compact"] .surface-card,
+html[data-density="compact"] .surface-card-lg { border-radius: 16px; }
+
+/* ── 登录暗夜域（/login 重构 · 暗夜穹顶方案）─────────────────────────────────
+   设计文档：仓库根《登录门户重构·暗夜穹顶方案与技术文档.md》。
+   新增裸 hex 仅 2 个（基底近黑 + 主白），其余全部 color-mix 从既有语义令牌派生，
+   控制色彩门计数。对比度已算：text-2 对基底 ≈7.7:1，text-3 ≈4.9:1（12px 小字达标）。 */
+:root {
+  --lh-bg: #05060a;
+  --lh-surface: rgba(255, 255, 255, 0.04);
+  --lh-border: rgba(255, 255, 255, 0.10);
+  --lh-text: #f5f7fa;
+  --lh-text-2: color-mix(in srgb, var(--lh-text) 62%, var(--lh-bg));
+  /* 52%：视频背景版上调（原 44% 为纯黑穹顶调的，点阵降灰段在视频亮部溶解） */
+  --lh-text-3: color-mix(in srgb, var(--lh-text) 52%, var(--lh-bg));
+  /* CTA 实底：V15.3 用户拍板换色——深青读作绿，改「天蓝稍深」的克莱因向蓝：
+     从品牌钴蓝 --c-edu 向暗底压深 15%（白霜环境控件对比 ≥3、白字 ≥4.5 双达标） */
+  --lh-cta: color-mix(in srgb, var(--c-edu) 85%, var(--lh-bg));
+  --lh-arc: color-mix(in srgb, var(--c-cyan) 70%, white);
+  --lh-arc-glow: color-mix(in srgb, var(--c-cyan) 30%, transparent);
+  --lh-horizon: color-mix(in srgb, var(--warn) 78%, white);
+}
+
+/* 穹顶动效：辐条层超慢旋转 + 地平线暖光呼吸。
+   双保险豁免：系统偏好 prefers-reduced-motion 与项目 .reduce-motion 类
+   （后者全局把 animation-duration 压到 0.01ms，此处再显式 none 一次，
+   语义明确——静止时穹顶就是一张完整的静态画，不缺任何信息。 */
+@keyframes lh-spin { to { transform: translateX(-50%) rotate(360deg); } }
+@keyframes lh-pulse { from { opacity: 0.42; } to { opacity: 0.6; } }
+.lh-spin { animation: lh-spin 240s linear infinite; }
+.lh-pulse { animation: lh-pulse 9s var(--ease-in-out) infinite alternate; }
+
+/* 暗域玻璃（视频背景版）：视频在动，玻璃才成立——backdrop-filter 采样的是
+   活的画面。配方三件套：微亮渐变底（顶亮底暗，模拟顶光）、半透边、
+   内侧 1px 高光（玻璃厚度的关键一笔）。采用者不得再用内联 background/border
+   覆盖，否则玻璃退化回普通半透明面板。
+   ⚠️ 模糊不在这里：实测 Lightning CSS 会把此处手写的 backdrop-filter 声明
+   整条剥离（CSSOM 里查无此属性），而 Tailwind 的 backdrop-blur-* 工具类
+   存活（登录卡 backdrop-blur-[14px] 是活证）。故采用者自带
+   `backdrop-blur-[18px] backdrop-saturate-150`，本类只管底、边、光。 */
+.lh-glass {
+  /* V14.2 用户拍板：苹果官网式浅色磨砂——高透白霜底 + 深墨文字 + 细白高光边。
+     深灰玻璃在亮视频上读作「黑色按钮」（二轮否决）；亮底视频的正确玻璃是
+     白霜降噪提亮，玻璃感来自 blur+saturate（采用者自带 backdrop-blur 工具类）。 */
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 8px 24px rgba(10, 14, 30, 0.12);
+  color: var(--lh-bg);
+}
+/* 强霜变体：嵌在玻璃里的可点物件（如导航内的登录钮）——用更实的白霜拉开层级 */
+.lh-glass-strong {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 4px 14px rgba(10, 14, 30, 0.16);
+  color: var(--lh-bg);
+}
+
+/* 视频上的文字投影：紧描边 + 柔光晕两层。暗帧上不可见，亮帧上救命——
+   这就是实拍背景排版的标准保险，替代被撤掉的整幅压暗层 */
+.lh-on-video {
+  text-shadow: 0 1px 2px rgba(5, 6, 10, 0.5), 0 2px 18px rgba(5, 6, 10, 0.45);
+}
+
+/* 呼吸动效：CTA 琉璃光效（V15.4 换代）+ 公告胶囊悬浮微漂。
+   幅度纪律:光晕只动 box-shadow(不回流)、流光只动 left、漂移只动 transform 4px——
+   「呼吸感」的上限是安静的活着,不是引人注目。 */
+/* 蓝白双色呼吸光晕：白亮芯贴边 + 克莱因蓝深晕在外，随呼吸同步吸吐 */
+@keyframes lh-glow-blue {
+  from {
+    box-shadow:
+      0 0 8px 0 color-mix(in srgb, white 26%, transparent),
+      0 0 20px 2px color-mix(in srgb, var(--lh-cta) 22%, transparent),
+      0 8px 24px rgba(10, 14, 30, 0.18);
+  }
+  to {
+    box-shadow:
+      0 0 14px 2px color-mix(in srgb, white 55%, transparent),
+      0 0 42px 8px color-mix(in srgb, var(--lh-cta) 48%, transparent),
+      0 8px 24px rgba(10, 14, 30, 0.18);
+  }
+}
+@keyframes lh-drift { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+/* V16 进场编排：氛围循环推迟到入场落定（~1.25s）之后才开始——
+   入场位移与循环位移不打架，也没有「还没站定就开始漂」的抖动；
+   backwards 让延迟期间保持 from 态而不是无动画裸态 */
+.lh-glow-blue { animation: lh-glow-blue 4.5s var(--ease-in-out) 1.3s infinite alternate backwards; }
+.lh-drift { animation: lh-drift 5.5s var(--ease-in-out) 1.3s infinite alternate backwards; }
+
+/* 玻璃流光：一道白-蓝高光斜扫过按钮表面（琉璃质感的「活」的那一笔）。
+   长停顿短扫过：5.5s 周期里只有 ~1.6s 在动，其余时间安静 */
+.lh-sheen { position: relative; overflow: hidden; }
+.lh-sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 45%;
+  transform: skewX(-18deg);
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 42%,
+    color-mix(in srgb, var(--lh-cta) 24%, transparent) 62%,
+    transparent 100%
+  );
+  animation: lh-sheen 5.5s var(--ease-in-out) 1.3s infinite backwards;
+  pointer-events: none;
+}
+@keyframes lh-sheen {
+  0%, 58% { left: -60%; }
+  86%, 100% { left: 130%; }
+}
+
+/* V17 琉璃边缘巡光（用户技术路线：一束亮白蓝光从左上角出发，沿边缘顺时针
+   巡回一周回到原点）。实现：环形 ::before（mask content-box XOR 抠出 2px 环）+
+   conic-gradient 亮段 + 注册型 @property 让角度可动画——形状不转，只有光在走，
+   胶囊圆角下光带贴边不变形。from 基准 315deg = 左上角起步。
+   ⚠️ 采用者不得有 overflow:hidden（外环出血 2px 会被裁掉）。 */
+@property --lh-trace-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.lh-border-trace { position: relative; }
+.lh-border-trace::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  padding: 2px;
+  background: conic-gradient(
+    from calc(var(--lh-trace-angle) + 315deg),
+    transparent 0deg,
+    transparent 300deg,
+    color-mix(in srgb, var(--c-edu) 55%, white) 331deg,
+    white 345deg,
+    color-mix(in srgb, var(--c-edu) 72%, white) 353deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--c-edu) 50%, white));
+  animation: lh-trace 3.6s linear 1.3s infinite backwards;
+  pointer-events: none;
+}
+@keyframes lh-trace {
+  to { --lh-trace-angle: 360deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lh-border-trace::before { animation: none; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lh-spin, .lh-pulse, .lh-glow-blue, .lh-drift, .lh-sheen::after { animation: none; }
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.6);
+}
+.dark .glass {
+  background: rgba(21,25,53,0.6);
+  border-color: rgba(255,255,255,0.08);
+}
+
+/* Card and surface helpers */
+.surface-card {
+  background: var(--card);
+  border: 1px solid var(--border-2);
+  border-radius: var(--rg-card-radius);
+  box-shadow: var(--rg-shadow);
+}
+.surface-card-lg {
+  background: var(--card);
+  border: 1px solid var(--border-2);
+  border-radius: var(--rg-panel-radius);
+  box-shadow: var(--rg-panel-shadow);
+}
+
+/* Focus rings */
+*:focus-visible {
+  outline: 2px solid var(--c-edu);
+  outline-offset: 2px;
+}
+
+/* H12 · 焦点环静音工具类（无层，特异度 0,2,1 > 上面的 0,1,0，唯一正当赢法）。
+   仅限「容器已用 focus-within 承担焦点指示」的输入件使用——用它必须同时保证
+   父容器有可见的 :focus-within 边框/底色变化，否则就是无障碍回退。
+   现役三处：Composer 文本域 / InlineSearch 输入框 / CommandPalette 输入框
+   （此前各自用内联 style={{outline:"none"}} 压制，第四处出现即建类的备忘兑现）。 */
+.focus-quiet:focus-visible {
+  outline: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   H14 · Soft 3D Cartoon 交互层（学生域限定）
+   设计语汇取自「游戏按键」范式（动森式立体感）：底部实色厚唇 + 暖调环境光晕
+   + hover 上浮 1px + active 下压 2px。这三件事合起来才有"按得动"的物理感，
+   缺一件就退化成普通扁平按钮加了个阴影。
+
+   两条刻意的边界，都是产品判断不是技术妥协：
+   ① 作用域锁死 [data-persona="student"] —— 教师与管理控制台是成年人的工作台，
+      玩具化会削弱专业可信度（用户同轮 caveat：不该升级的地方不要动，会分散注意）。
+   ② 不新增圆角档位 —— 字阶/圆角棘轮规定「圆角 ≤2 档 + pill 豁免，只许降不许升」。
+      按钮走 pill、面板复用既有 20px，既满足「圆角 ≥16px」又不放宽判据。
+   阴影一律暖调（紫调 rgba），禁冷黑——冷黑阴影是廉价扁平感的主要来源。
+   ═══════════════════════════════════════════════════════════════════════════ */
+[data-persona="student"] {
+  --play-primary: #7C3AED;
+  --play-pink:    #EC4899;
+  --play-orange:  #F97316;
+  --play-teal:    #14B8A6;
+  --play-blue:    #3B82F6;
+  --play-grad-pp: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  --play-grad-op: linear-gradient(135deg, #FB923C 0%, #EC4899 100%);
+  /* 立体唇色 = 各自主色暗一档；变体用 --lip 局部覆写 */
+  --play-lip-primary: #5B21B6;
+  --play-lip-neutral: #CBBFAE;
+  --play-glow:    0 6px 16px rgba(91, 33, 182, 0.16);
+  --play-glow-lg: 0 10px 24px rgba(91, 33, 182, 0.24);
+}
+
+/* 游戏按键立体原语。刻意不写 border-radius——圆角交给 Tailwind 工具类，
+   本类只负责"厚度与手感"，两者正交后才能自由组合（pill 按钮 / 20px 卡片通用）。 */
+.play-3d {
+  --lip: var(--play-lip-neutral);
+  box-shadow: 0 4px 0 0 var(--lip), var(--play-glow);
+  transition: transform 0.18s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.18s ease-out;
+}
+.play-3d:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 0 var(--lip), var(--play-glow-lg);
+}
+.play-3d:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 0 var(--lip), var(--play-glow);
+}
+.play-3d:disabled { box-shadow: 0 2px 0 0 var(--lip); }
+
+/* 顶部高光：塑料/软糖质感的来源。inset 1px 避免盖住描边，border-radius: inherit
+   让它自动贴合宿主圆角（pill 或 20px 都不用改这里）。 */
+.play-gloss { position: relative; overflow: hidden; }
+.play-gloss::after {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto 1px;
+  height: 45%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+/* 徽章/图标浮起：静置时轻微呼吸，hover 抬升并回正——给"可点"一个不打扰的暗示 */
+.play-float { transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), filter 0.22s ease-out; }
+.play-float:hover { transform: translateY(-3px) scale(1.06) rotate(-2deg); filter: drop-shadow(0 8px 12px rgba(91, 33, 182, 0.22)); }
+
+/* reduced-motion：只砍位移与缩放，保留厚度与高光——降级掉的是动，不是设计 */
+@media (prefers-reduced-motion: reduce) {
+  .play-3d, .play-float { transition: none; }
+  .play-3d:hover:not(:disabled), .play-3d:active:not(:disabled), .play-float:hover { transform: none; }
+}
+/* EduAI Prism · opaque glass 3D learning surfaces -------------------------
+   Scoped to chat and onboarding so operational/admin screens keep their
+   restrained density. The surfaces are deliberately opaque enough for
+   reading; depth comes from edge highlights and physical press states. */
+.chat-experience,
+.onboarding-experience {
+  --edu-glass-bg: rgba(255, 255, 255, 0.93);
+  --edu-glass-bg-strong: rgba(255, 255, 255, 0.97);
+  --edu-glass-bg-soft: rgba(246, 250, 255, 0.9);
+  --edu-glass-edge: rgba(255, 255, 255, 0.96);
+  --edu-glass-line: rgba(124, 146, 178, 0.2);
+  --edu-glass-ink: #20324f;
+  --edu-glass-muted: #66748a;
+  --edu-glass-lip: #c8d5e6;
+  --edu-glass-shadow: 0 14px 36px rgba(57, 76, 108, 0.12), 0 3px 8px rgba(57, 76, 108, 0.08);
+  --edu-glass-shadow-soft: 0 7px 20px rgba(57, 76, 108, 0.09), 0 2px 5px rgba(57, 76, 108, 0.06);
+  --edu-blue: #377cf6;
+  --edu-blue-deep: #1f5fd4;
+  --edu-mint: #36b98a;
+  --edu-mint-deep: #238968;
+  --edu-orange: #f1973e;
+  --edu-orange-deep: #d66c2e;
+  --edu-lilac: #8a72e6;
+  --edu-lilac-deep: #6751bd;
+}
+
+.chat-experience {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--edu-glass-ink);
+  background:
+    linear-gradient(126deg, rgba(238, 245, 255, 0.96) 0%, rgba(244, 250, 247, 0.95) 56%, rgba(255, 248, 239, 0.94) 100%);
+}
+
+.chat-experience::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(78, 111, 153, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(78, 111, 153, 0.035) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.edu-glass-panel {
+  border: 1px solid var(--edu-glass-line);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), var(--edu-glass-bg));
+  box-shadow:
+    inset 0 1px 0 var(--edu-glass-edge),
+    inset 0 -1px 0 rgba(124, 146, 178, 0.08),
+    var(--edu-glass-shadow-soft);
+}
+
+.edu-glass-panel-strong {
+  border: 1px solid rgba(124, 146, 178, 0.22);
+  background:
+    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.97) 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    inset 0 -2px 0 rgba(124, 146, 178, 0.08),
+    0 14px 36px rgba(57, 76, 108, 0.12),
+    0 3px 8px rgba(57, 76, 108, 0.08);
+}
+
+.edu-glass-inset {
+  border: 1px solid rgba(124, 146, 178, 0.18);
+  background: rgba(238, 244, 251, 0.84);
+  box-shadow:
+    inset 0 2px 5px rgba(73, 95, 126, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.edu-3d-control {
+  border: 1px solid rgba(114, 139, 175, 0.22);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(244, 248, 253, 0.96));
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 3px 0 var(--edu-glass-lip),
+    0 7px 15px rgba(55, 78, 111, 0.1);
+  transform: translateY(0);
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.edu-3d-control:hover:not(:disabled) {
+  border-color: rgba(55, 124, 246, 0.34);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 4px 0 var(--edu-glass-lip),
+    0 10px 20px rgba(55, 78, 111, 0.13);
+  transform: translateY(-1px);
+}
+
+.edu-3d-control:active:not(:disabled) {
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 1px 0 var(--edu-glass-lip),
+    0 4px 8px rgba(55, 78, 111, 0.1);
+  transform: translateY(2px);
+}
+
+.edu-3d-primary {
+  color: #fff;
+  border-color: rgba(31, 95, 212, 0.34);
+  background: linear-gradient(145deg, #5b95ff 0%, var(--edu-blue) 58%, #2a6fe6 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 4px 0 var(--edu-blue-deep),
+    0 10px 20px rgba(55, 124, 246, 0.24);
+}
+
+.edu-3d-primary:hover:not(:disabled) {
+  border-color: rgba(31, 95, 212, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 5px 0 var(--edu-blue-deep),
+    0 13px 25px rgba(55, 124, 246, 0.28);
+}
+
+.edu-3d-primary:active:not(:disabled) {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 1px 0 var(--edu-blue-deep),
+    0 5px 10px rgba(55, 124, 246, 0.2);
+}
+
+.edu-chat-sidebar-shell {
+  min-width: 0;
+}
+
+.edu-chat-sidebar-shell[data-open="false"] {
+  display: none;
+}
+
+.panel-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 30;
+  width: 12px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+}
+
+.panel-resize-handle[data-edge="end"] {
+  right: 0;
+}
+
+.panel-resize-handle[data-edge="start"] {
+  left: 0;
+}
+
+.panel-resize-handle__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: transparent;
+  transition: background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.panel-resize-handle[data-edge="end"] .panel-resize-handle__line {
+  right: 0;
+}
+
+.panel-resize-handle[data-edge="start"] .panel-resize-handle__line {
+  left: 0;
+}
+
+.panel-resize-handle__grip {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  width: 8px;
+  height: 34px;
+  translate: 0 -50%;
+  place-content: center;
+  gap: 3px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  opacity: 0;
+  transition: opacity 120ms ease, border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.panel-resize-handle[data-edge="end"] .panel-resize-handle__grip {
+  right: 1px;
+}
+
+.panel-resize-handle[data-edge="start"] .panel-resize-handle__grip {
+  left: 1px;
+}
+
+.panel-resize-handle__grip i {
+  display: block;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+
+.panel-resize-handle:hover .panel-resize-handle__line,
+.panel-resize-handle:focus-visible .panel-resize-handle__line,
+.panel-resize-handle[data-resizing="true"] .panel-resize-handle__line {
+  background: var(--accent-focus);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-focus) 12%, transparent);
+}
+
+.panel-resize-handle:hover .panel-resize-handle__grip,
+.panel-resize-handle:focus-visible .panel-resize-handle__grip,
+.panel-resize-handle[data-resizing="true"] .panel-resize-handle__grip {
+  border-color: color-mix(in srgb, var(--accent-focus) 24%, transparent);
+  background: color-mix(in srgb, var(--rail-bg) 88%, transparent);
+  box-shadow: 0 4px 12px rgba(41, 62, 94, 0.12);
+  opacity: 1;
+}
+
+.panel-resize-handle:focus-visible .panel-resize-handle__grip {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-resize-handle__line,
+  .panel-resize-handle__grip {
+    transition: none;
+  }
+}
+
+.edu-chat-sidebar {
+  position: relative;
+  z-index: 2;
+  border-right-color: rgba(124, 146, 178, 0.18);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 10px 0 30px rgba(62, 80, 108, 0.06), inset -1px 0 0 rgba(255, 255, 255, 0.92);
+}
+
+.edu-chat-sidebar-section-trigger {
+  border: 1px solid transparent;
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.edu-chat-sidebar-section-trigger:hover {
+  border-color: rgba(124, 146, 178, 0.16);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--text);
+}
+
+.edu-chat-sidebar-section-trigger:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--c-edu) 32%, transparent);
+  outline-offset: 1px;
+}
+
+.edu-chat-sidebar-section-trigger > svg:last-child {
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.edu-chat-sidebar-section-trigger[aria-expanded="false"] > svg:last-child {
+  transform: rotate(-90deg);
+}
+
+.edu-chat-sidebar-count {
+  display: inline-grid;
+  min-width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid rgba(124, 146, 178, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.68);
+  color: var(--text-3);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.edu-session-row {
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.34);
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.edu-session-row:hover {
+  border-color: rgba(124, 146, 178, 0.17);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 5px 13px rgba(57, 76, 108, 0.08);
+  transform: translateY(-1px);
+}
+
+.edu-session-row[data-active="true"] {
+  border-color: rgba(55, 124, 246, 0.28);
+  background: linear-gradient(145deg, rgba(235, 244, 255, 0.98), rgba(245, 249, 255, 0.96));
+  box-shadow: inset 0 1px 0 #fff, 0 3px 0 rgba(93, 141, 221, 0.24), 0 8px 18px rgba(55, 124, 246, 0.1);
+}
+
+.edu-chat-scroll {
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+}
+
+.edu-chat-empty {
+  border: 1px solid rgba(124, 146, 178, 0.17);
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: inset 0 1px 0 #fff, 0 18px 42px rgba(57, 76, 108, 0.1);
+}
+
+.edu-chat-avatar {
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42), 0 3px 0 rgba(66, 83, 113, 0.22), 0 8px 15px rgba(57, 76, 108, 0.15);
+}
+
+.edu-chat-message-assistant {
+  border: 1px solid rgba(124, 146, 178, 0.2);
+  background: linear-gradient(154deg, rgba(255, 255, 255, 0.99), rgba(248, 251, 255, 0.95));
+  box-shadow: inset 0 1px 0 #fff, 0 3px 0 rgba(198, 211, 228, 0.82), 0 12px 25px rgba(57, 76, 108, 0.1);
+}
+
+.edu-chat-message-user {
+  border: 1px solid rgba(190, 89, 35, 0.22);
+  color: #fff;
+  background: linear-gradient(145deg, #f7aa46 0%, var(--edu-orange) 45%, #e4623b 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38), 0 3px 0 var(--edu-orange-deep), 0 12px 25px rgba(226, 102, 53, 0.2);
+}
+
+.edu-composer-shell {
+  position: relative;
+  z-index: 3;
+  background: linear-gradient(180deg, rgba(244, 248, 253, 0), rgba(244, 248, 253, 0.86) 28%, rgba(244, 248, 253, 0.98) 100%);
+}
+
+.edu-composer {
+  border: 1px solid rgba(95, 124, 163, 0.24);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: inset 0 1px 0 #fff, 0 4px 0 rgba(194, 208, 226, 0.86), 0 16px 34px rgba(57, 76, 108, 0.14);
+}
+
+.edu-composer:focus-within {
+  border-color: rgba(55, 124, 246, 0.46);
+  box-shadow: inset 0 1px 0 #fff, 0 4px 0 rgba(55, 124, 246, 0.35), 0 18px 38px rgba(55, 124, 246, 0.16);
+}
+
+/* The chat canvas responds to its own width, which changes independently of the
+   viewport while the three surrounding panels are dragged. */
+.chat-primary-pane {
+  container-name: chat-primary-pane;
+  container-type: inline-size;
+  overflow: hidden;
+  --chat-thread-max: 1040px;
+  --chat-composer-max: 960px;
+  --chat-message-max: min(82%, 840px);
+}
+
+.edu-chat-thread {
+  inline-size: min(100%, var(--chat-thread-max));
+}
+
+.edu-chat-message-body {
+  max-inline-size: var(--chat-message-max);
+}
+
+.edu-chat-message-card {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+.edu-chat-message-card pre,
+.edu-chat-message-card table {
+  max-inline-size: 100%;
+  overflow-x: auto;
+}
+
+.edu-composer,
+.edu-composer-notice,
+.edu-composer-safety {
+  inline-size: min(100%, var(--chat-composer-max));
+}
+
+.edu-chat-empty {
+  max-inline-size: 860px;
+  grid-template-columns: 220px minmax(0, 1fr);
+}
+
+.edu-learning-art-bg {
+  min-block-size: 300px;
+}
+
+@container chat-primary-pane (max-width: 760px) {
+  .edu-chat-topbar {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .edu-chat-assistant-tabs {
+    order: 20;
+    flex: 1 0 100%;
+    min-inline-size: 0;
+  }
+
+  .edu-chat-assistant-tabs [role="tablist"] {
+    display: grid;
+    inline-size: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .edu-chat-assistant-tabs [role="tab"] {
+    min-inline-size: 0;
+    padding-inline: 8px;
+  }
+
+  .edu-chat-session-actions {
+    margin-inline-start: auto;
+  }
+
+  .edu-chat-agent-banner {
+    flex-wrap: wrap;
+    padding-inline: 12px;
+  }
+
+  .edu-chat-scroll {
+    padding-inline: 12px;
+  }
+
+  .edu-chat-message-row {
+    gap: 8px;
+  }
+
+  .edu-chat-message-avatar {
+    block-size: 34px;
+    inline-size: 34px;
+    border-radius: 10px;
+  }
+
+  .edu-chat-message-body {
+    max-inline-size: calc(100% - 42px);
+  }
+
+  .edu-chat-message-card {
+    padding-inline: 12px;
+  }
+
+  .edu-chat-empty {
+    max-inline-size: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    margin-block-start: 12px;
+  }
+
+  .edu-learning-art-bg {
+    min-block-size: 160px;
+  }
+
+  .edu-composer-shell {
+    padding-inline: 10px;
+  }
+}
+
+@container chat-primary-pane (max-width: 560px) {
+  .edu-chat-topbar {
+    align-content: flex-start;
+  }
+
+  .edu-chat-model-control {
+    min-block-size: 44px;
+    gap: 7px;
+    padding-inline: 8px;
+  }
+
+  .edu-chat-model-avatar {
+    block-size: 32px;
+    inline-size: 32px;
+    border-radius: 10px;
+  }
+
+  .edu-chat-model-subtitle,
+  .edu-chat-control-label,
+  .edu-chat-export-label,
+  .edu-composer-tool-label {
+    display: none;
+  }
+
+  .edu-chat-feature-control {
+    block-size: 42px;
+    min-block-size: 42px;
+    inline-size: 42px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .edu-chat-assistant-tabs [role="tablist"] {
+    gap: 2px;
+    padding: 3px;
+  }
+
+  .edu-chat-assistant-tabs [role="tab"] {
+    padding-inline: 4px;
+    font-size: 12px;
+  }
+
+  .edu-composer-toolbar {
+    gap: 4px;
+  }
+
+  .edu-composer-safety {
+    text-align: start;
+  }
+}
+
+@container chat-primary-pane (max-width: 400px) {
+  .edu-chat-topbar {
+    padding-inline: 8px;
+  }
+
+  .edu-chat-model-meta {
+    max-inline-size: 88px;
+  }
+
+  .edu-chat-model-meta > :first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .edu-chat-scroll {
+    padding-inline: 8px;
+  }
+
+  .edu-chat-message-row {
+    gap: 6px;
+  }
+
+  .edu-chat-message-avatar {
+    block-size: 30px;
+    inline-size: 30px;
+  }
+
+  .edu-chat-message-body {
+    max-inline-size: calc(100% - 36px);
+  }
+
+  .edu-chat-message-card {
+    border-radius: 16px;
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .edu-composer-shell {
+    padding-inline: 8px;
+  }
+}
+
+.onboarding-experience {
+  color: var(--edu-glass-ink);
+}
+
+.edu-onboarding-shell {
+  border: 1px solid rgba(255, 255, 255, 0.94);
+  background: rgba(251, 253, 255, 0.97);
+  box-shadow: inset 0 1px 0 #fff, 0 5px 0 rgba(181, 196, 218, 0.85), 0 28px 80px rgba(19, 36, 65, 0.26);
+}
+
+.edu-onboarding-visual {
+  position: relative;
+  overflow: hidden;
+  background: #dcecf8;
+}
+
+.edu-onboarding-visual::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72), inset 0 -32px 48px rgba(38, 77, 119, 0.08);
+}
+
+.edu-onboarding-step {
+  border: 1px solid rgba(124, 146, 178, 0.18);
+  background: rgba(245, 249, 254, 0.92);
+  box-shadow: inset 0 1px 0 #fff, 0 3px 0 rgba(194, 208, 226, 0.72);
+}
+
+.edu-onboarding-step[data-current="true"] {
+  border-color: rgba(55, 124, 246, 0.35);
+  background: rgba(234, 243, 255, 0.98);
+  box-shadow: inset 0 1px 0 #fff, 0 3px 0 rgba(55, 124, 246, 0.38), 0 8px 18px rgba(55, 124, 246, 0.12);
+}
+
+.edu-learning-art-bg {
+  background: #dcecf8;
+}
+
+.edu-onboarding-caption-title {
+  color: #28527d;
+}
+
+.edu-onboarding-caption-body {
+  color: #5a6f84;
+}
+
+.edu-tone-icon[data-tone="blue"] {
+  background: linear-gradient(145deg, #6ea4ff, #3978ee);
+}
+
+.edu-tone-icon[data-tone="orange"] {
+  background: linear-gradient(145deg, #ffb45b, #eb7d37);
+}
+
+.edu-tone-icon[data-tone="mint"] {
+  background: linear-gradient(145deg, #62d5ac, #2ca77c);
+}
+
+@media (max-width: 767px) {
+  .edu-chat-empty {
+    border-radius: 20px;
+  }
+
+  .edu-composer-shell {
+    padding-inline: 10px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  .edu-onboarding-shell {
+    max-height: min(760px, calc(100dvh - 24px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-experience *,
+  .onboarding-experience * {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

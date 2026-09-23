@@ -1,0 +1,111 @@
+{
+  "generator": "GPT built-in imagegen",
+  "atlas": "exec-7fd809df-cc12-44ef-8e5c-f6589e800050.png",
+  "processing": "User-authorized green chroma cutout. Uniform optical size, transparent PNG.",
+  "assets": [
+    {
+      "name": "prep",
+      "file": "prep.png",
+      "width": 256,
+      "height": 256,
+      "sourceBounds": [
+        85,
+        123,
+        340,
+        276
+      ],
+      "bytes": 92349
+    },
+    {
+      "name": "artifacts",
+      "file": "artifacts.png",
+      "width": 256,
+      "height": 256,
+      "sourceBounds": [
+        533,
+        98,
+        317,
+        300
+      ],
+      "bytes": 76155
+    },
+    {
+      "name": "water",
+      "file": "water.png",
+      "width": 256,
+      "height": 256,
+      "sourceBounds": [
+        976,
+        103,
+        261,
+        308
+      ],
+      "bytes": 55977
+    },
+    {
+      "name": "plant",
+      "file": "plant.png",
+      "width": 256,
+      "height": 256,
+      "sourceBounds": [
+        1366,
+        123,
+        288,
+        275
+      ],
+      "bytes": 76012
+    },
+    {
+      "name": "math",
+      "file": "math.png",
+      "width": 256,
+      "height": 256,
+      "sourceBounds": [
+        81,
+        516,
+        344,
+        254
+      ],
+      "bytes": 66935
+    },
+    {
+      "name": "reading",
+      "file": "reading.png",
+      "width": 256,
+      "height": 256,
+      "sourceBounds": [
+        514,
+        515,
+        332,
+        279
+      ],
+      "bytes": 83914
+    },
+    {
+      "name": "worksheet",
+      "file": "worksheet.png",
+      "width": 256,
+      "height": 256,
+      "sourceBounds": [
+        954,
+        501,
+        293,
+        297
+      ],
+      "bytes": 90036
+    },
+    {
+      "name": "folder",
+      "file": "folder.png",
+      "width": 256,
+      "height": 256,
+      "sourceBounds": [
+        1357,
+        491,
+        299,
+        302
+      ],
+      "bytes": 80910
+    }
+  ]
+}

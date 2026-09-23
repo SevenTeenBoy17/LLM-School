@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="x-dns-prefetch-control" content="off"><title>教学活动隔离运行区</title>
+<style>html,body{margin:0;width:100%;height:100%;background:#fff}iframe{border:0;width:100%;height:100%;display:block}</style></head><body>
+<script>
+// This trusted wrapper is served with a response CSP even after client-side navigation.
+(() => {
+  'use strict';
+  let nonce = '', inner, url = '', reportedErrors = 0, reportedLoaded = false;
+  const emit = (status) => parent.postMessage({ type: 'eduai-runtime', version: 1, nonce, status }, '*');
+  addEventListener('message', (event) => {
+    const data = event.data;
+    if (event.source === parent && !inner && data && data.type === 'eduai-runtime-init' && data.version === 1
+      && typeof data.nonce === 'string' && /^[a-f0-9-]{36}$/.test(data.nonce)
+      // MAX_HTML_BYTES in lib/school-resources/model.ts, repeated for this static wrapper.
+      && typeof data.html === 'string' && data.html.length > 0 && data.html.length <= 5242880
+      && new TextEncoder().encode(data.html).length <= 5242880) {
+      nonce = data.nonce;
+      const policy = "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; media-src data: blob:; font-src data:; connect-src 'none'; frame-src 'none'; child-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
+      const bridge = '<script>addEventListener("DOMContentLoaded",()=>parent.postMessage({type:"eduai-inner",status:"loaded"},"*"));addEventListener("error",()=>parent.postMessage({type:"eduai-inner",status:"script-error"},"*"));addEventListener("unhandledrejection",()=>parent.postMessage({type:"eduai-inner",status:"script-error"},"*"));<\/script>';
+      const prefix = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="x-dns-prefetch-control" content="off"><meta http-equiv="Content-Security-Policy" content="' + policy + '">' + bridge + '</head><body>';
+      inner = document.createElement('iframe');
+      inner.title = 'HTML 教学内容';
+      inner.setAttribute('sandbox', 'allow-scripts');
+      inner.setAttribute('referrerpolicy', 'no-referrer');
+      inner.setAttribute('allow', "camera 'none'; microphone 'none'; geolocation 'none'; payment 'none'; usb 'none'");
+      url = URL.createObjectURL(new Blob([prefix, data.html, '</body></html>'], { type: 'text/html;charset=utf-8' }));
+      inner.src = url;
+      document.body.append(inner);
+      emit('started');
+    } else if (inner && event.source === inner.contentWindow && data && data.type === 'eduai-inner') {
+      if (data.status === 'loaded' && !reportedLoaded) { reportedLoaded = true; emit('loaded'); }
+      if (data.status === 'script-error' && reportedErrors++ < 3) emit('script-error');
+    }
+  });
+  addEventListener('pagehide', () => { if (url) URL.revokeObjectURL(url); });
+})();
+</script></body></html>

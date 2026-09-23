@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "collection": "EduAI teacher Skill library 3D micro-scenes",
+  "createdAt": "2026-08-31",
+  "generation": {
+    "mode": "OpenAI built-in ImageGen",
+    "source": "project-original text-to-image assets",
+    "promptSummary": "A consistent family of glossy rounded clay and translucent-resin EduAI helpers with education-specific props, a three-quarter camera, upper-left studio light, clear small-size silhouettes, no text, no logos, and no copied mascot identity.",
+    "backgroundWorkflow": "ImageGen chroma-green production masters, deterministic local chroma extraction, border-component cleanup, WebP alpha encoding, and light/dark contact-sheet review.",
+    "runtimeKeyRequired": false
+  },
+  "constraints": [
+    "Decorative images only; accessible names remain in DOM text.",
+    "No words, letters, numbers, logos, watermarks, flags, currency, or third-party characters.",
+    "Do not claim reverse-image-search clearance; complete that review before public asset redistribution."
+  ],
+  "assets": [
+    { "file": "category-curriculum-design.webp", "width": 512, "height": 512, "bytes": 33084, "sha256": "43ae4870fe8227cc7a7096436a148ef3ab65d5c6f2bcbe49ee7a41f29f4e342e" },
+    { "file": "category-discovery.webp", "width": 512, "height": 512, "bytes": 40000, "sha256": "c72e964b0025c9172bb5eb05b61a7de6034e6192defd713adce01d9e403a2a2b" },
+    { "file": "category-source-audit.webp", "width": 512, "height": 512, "bytes": 41580, "sha256": "47e95a1ec0c8a6d62cf3470ee2e46ea735c5859fea816588802f31305ccb5003" },
+    { "file": "category-teaching-research.webp", "width": 512, "height": 512, "bytes": 37906, "sha256": "d77596ceb0803b501617e57b8f531dfe25c7d84c1b5ac77f3d4ca1e043d94366" },
+    { "file": "scene-code-audit.webp", "width": 384, "height": 384, "bytes": 26964, "sha256": "da0c0ccd1aa5fe95b095274023d8b7aa64e2fc8487ee44bb783111271a458c0f" },
+    { "file": "scene-curriculum-crosswalk.webp", "width": 384, "height": 384, "bytes": 23480, "sha256": "40b4c58c4a41b377b1c760a440d4cf347b214ee0aa0237c48bedbce65e9df8cf" },
+    { "file": "scene-curriculum-route.webp", "width": 384, "height": 384, "bytes": 20816, "sha256": "83aea97230a4d75cae2e09019041897b56fc8e2126a3d21b8974cd1215a36a30" },
+    { "file": "scene-differentiation.webp", "width": 384, "height": 384, "bytes": 24646, "sha256": "92b66032b8bc91414bb28f265a888182f8bf340bc401e66f3f9f76dc6063bf04" },
+    { "file": "scene-directory-network.webp", "width": 384, "height": 384, "bytes": 31668, "sha256": "bd899a01e9498ddd53f0e3b6a0a77adc04b8da1fc9bd341923270a862ba37a2b" },
+    { "file": "scene-lesson-plan.webp", "width": 384, "height": 384, "bytes": 26176, "sha256": "cc36b0397cd3a11fd89ff675ae6f8dbd4988579c0d3d39a82e3618efd5b0f190" },
+    { "file": "scene-panel-review.webp", "width": 384, "height": 384, "bytes": 26770, "sha256": "791c41af09886d7fc6fa8bf61970620552d043d2f294b7c6c047c7b38d1627b8" },
+    { "file": "scene-portal-directory.webp", "width": 384, "height": 384, "bytes": 28038, "sha256": "0ec03e83c3aa24f991e050b3ba57ebea4b754bf02007ab3b85cf759ee17c0db5" },
+    { "file": "scene-repository-branch.webp", "width": 384, "height": 384, "bytes": 22432, "sha256": "42e3b1c026a9df9a59851d0475f29579645a44e9045a8cff81443adca682feb3" },
+    { "file": "scene-research-lab.webp", "width": 384, "height": 384, "bytes": 27512, "sha256": "ec845295f17e182a498c1f1e89381f26afcb355093cb007e9645078d3097e258" },
+    { "file": "scene-review-checklist.webp", "width": 384, "height": 384, "bytes": 28154, "sha256": "2013da53c830872d7d7af5a8f52a4beea658702eb4ef8a2e93ba3fa59987f4b3" },
+    { "file": "scene-rubric-evaluation.webp", "width": 384, "height": 384, "bytes": 22580, "sha256": "129d64e7d625034227916e316156f17b52d4a0df706023f381c283bae8607a4f" },
+    { "file": "scene-search-catalog.webp", "width": 384, "height": 384, "bytes": 22230, "sha256": "6c5311dcaebefee87d48604e38564ea5c8dea5505644b4938e07724a46190a14" },
+    { "file": "scene-skill-collection.webp", "width": 384, "height": 384, "bytes": 23276, "sha256": "399de3ab5e58b14abbf2e3f9c37fb0f775156026d53dfccbf1059287de6de6f5" },
+    { "file": "scene-source-toolbox.webp", "width": 384, "height": 384, "bytes": 25648, "sha256": "701040ce9d43c15dd5bc1e738fab5362ffdff6a86e11f10267f8c6cf87c960d4" },
+    { "file": "scene-teacher-assistant.webp", "width": 384, "height": 384, "bytes": 21494, "sha256": "3d9f58d576c51c82077378cb93a7d0e7f3c90f70e4191ded9656d02a76addc80" }
+  ]
+}

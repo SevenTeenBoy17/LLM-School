@@ -1,0 +1,23 @@
+{
+  "generatedBy": "GPT built-in imagegen",
+  "sourceSha256": "39795e264d2717de8ea5ed14034bf2d2cdfa0db0eb16b155a8f064e303d2493a",
+  "posterSha256": "23de9b1b7f779c001424b44c6e79ab0005a5a8262abe78eed91d9e61bff6f13b",
+  "texture": {
+    "width": 2048,
+    "height": 1024,
+    "bytes": 332408
+  },
+  "sphere": {
+    "widthSegments": 64,
+    "heightSegments": 40,
+    "triangles": 4992,
+    "radius": 1
+  },
+  "modelBytes": 582076,
+  "runtime": {
+    "meshes": 2,
+    "points": 112,
+    "postprocessing": false,
+    "maxDpr": 1.5
+  }
+}

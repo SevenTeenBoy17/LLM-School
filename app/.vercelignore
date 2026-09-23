@@ -1,0 +1,9 @@
+.next
+node_modules
+.data
+.data-backup
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.env*.local
+*.log

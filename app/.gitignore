@@ -1,0 +1,59 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/.next*/
+/out/
+
+# production
+/build
+
+# local data store (node:sqlite + WAL/SHM sidecars, legacy json store)
+# 含口令哈希 / 学生实名 PII / 危机求助工单 / 审计日志 —— 面向未成年人，绝不入库
+/.data/
+/.data-backup/
+*.sqlite-wal
+*.sqlite-shm
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+.vercel
+.env*
+!.env.example
+
+# AIGC 中间产物：1024px 原图，抠图压缩后的 webp 才入库
+_badge-raw/
+_gen-result.json
+_badge-gen-result.json
